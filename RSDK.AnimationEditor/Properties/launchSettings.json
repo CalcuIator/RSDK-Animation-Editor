@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "RSDK.AnimationEditor (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "RSDK.AnimationEditor (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
