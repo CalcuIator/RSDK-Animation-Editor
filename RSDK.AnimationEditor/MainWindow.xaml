@@ -155,8 +155,6 @@
                 <ListView Grid.Row="0" ItemsSource="{Binding Animations}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedAnimation, Mode=TwoWay}" SelectedIndex="{Binding SelectedAnimationIndex, Mode=TwoWay}" CacheMode="BitmapCache" ShowsScrollingPlaceholders="True"/>
             </Grid>
 
-            <!--Sprite Canvas-->
-
             <Grid Grid.Column="1" RowSpacing="4">
 
                 <Grid.RowDefinitions>
@@ -164,7 +162,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Border 
+                <Border
                     Background="{ThemeResource LayerFillColorDefaultBrush}"
                     BorderBrush="{ThemeResource CardStrokeColorDefault}"
                     BorderThickness="1"

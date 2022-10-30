@@ -36,7 +36,7 @@
             <StackPanel Orientation="Horizontal">
                 <MenuBar>
                     <MenuBarItem Title="File">
-                        <MenuFlyoutItem Text="Open">
+                        <MenuFlyoutItem Text="Open" Click="FileOpen_Click">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xe838;"/>
                             </MenuFlyoutItem.Icon>
@@ -50,7 +50,7 @@
                             </MenuFlyoutSubItem.Icon>
                         </MenuFlyoutSubItem>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Save" IsEnabled="{Binding IsAnimationDataLoaded}">
+                        <MenuFlyoutItem Text="Save" IsEnabled="{Binding IsAnimationDataLoaded}" Click="FileSave_Click">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xe74e;"/>
                             </MenuFlyoutItem.Icon>
@@ -67,7 +67,7 @@
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <MenuFlyoutSeparator HorizontalAlignment="Stretch"/>
-                        <MenuFlyoutItem Text="Exit">
+                        <MenuFlyoutItem Text="Exit" Click="FileExit_Click">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xe8a7;"/>
                             </MenuFlyoutItem.Icon>
@@ -87,7 +87,7 @@
                             </MenuFlyoutItem>
                         </MenuFlyoutSubItem>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Hitbox manager" IsEnabled="{Binding IsAnimationDataLoaded}">
+                        <MenuFlyoutItem Text="Hitbox manager" IsEnabled="{Binding IsAnimationDataLoaded}" Click="ViewHitbox_Click">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xe9a6;"/>
                             </MenuFlyoutItem.Icon>
@@ -95,7 +95,7 @@
                                 <KeyboardAccelerator Modifiers="Control" Key="H"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Texture manager" IsEnabled="{Binding IsAnimationDataLoaded}">
+                        <MenuFlyoutItem Text="Texture manager" IsEnabled="{Binding IsAnimationDataLoaded}" Click="ViewTexture_Click">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xe8b9;"/>
                             </MenuFlyoutItem.Icon>
@@ -106,14 +106,14 @@
                     </MenuBarItem>
                 </MenuBar>
                 <AppBarSeparator/>
-                <Button Style="{StaticResource MenuButton}" ToolTipService.ToolTip="Save" IsEnabled="{Binding IsAnimationDataLoaded}">
+                <Button Style="{StaticResource MenuButton}" IsEnabled="{Binding IsAnimationDataLoaded}" ToolTipService.ToolTip="Save" Click="FileSave_Click">
                     <TextBlock Text="&#xe74e;" Margin="-7"/>
                 </Button>
                 <AppBarSeparator/>
-                <Button Style="{StaticResource MenuButton}">
+                <Button Style="{StaticResource MenuButton}" IsEnabled="False">
                     <TextBlock Text="&#xe7a7;" Margin="-7"/>
                 </Button>
-                <Button Style="{StaticResource MenuButton}">
+                <Button Style="{StaticResource MenuButton}" IsEnabled="False">
                     <TextBlock Text="&#xe7a6;" Margin="-7"/>
                 </Button>
                 <Button x:Name="indxu" x:Load="False">
@@ -147,7 +147,7 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0">
+            <Grid Grid.Column="0" x:Name="Column0" x:Load="False">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
@@ -155,9 +155,7 @@
                 <ListView Grid.Row="0" ItemsSource="{Binding Animations}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedAnimation, Mode=TwoWay}" SelectedIndex="{Binding SelectedAnimationIndex, Mode=TwoWay}" CacheMode="BitmapCache" ShowsScrollingPlaceholders="True"/>
             </Grid>
 
-            <!--Sprite Canvas-->
-
-            <Grid Grid.Column="1" RowSpacing="4">
+            <Grid x:Name="Column1" x:Load="False" Grid.Column="1" RowSpacing="4">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -301,7 +299,7 @@
 
             </Grid>
 
-            <Grid Grid.Column="2" RowSpacing="8" Padding="6" Visibility="{Binding IsAnimationDataLoaded}">
+            <Grid x:Name="Column2" x:Load="False" Grid.Column="2" RowSpacing="8" Padding="6" Visibility="{Binding IsAnimationDataLoaded}">
                 <Grid.ChildrenTransitions>
                     <PopupThemeTransition/>
                 </Grid.ChildrenTransitions>
