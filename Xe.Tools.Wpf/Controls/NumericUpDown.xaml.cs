@@ -26,23 +26,9 @@
 // it artfully, but instead support it and its author. Thank you.
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Xe.Tools.Wpf.Controls
 {
@@ -94,7 +80,7 @@ namespace Xe.Tools.Wpf.Controls
             InitializeComponent();
             TextNumber.DataContext = this;
         }
-        
+
         private void CheckBoundaries(int value, int minimumValue, int maximumValue)
         {
             var minReached = value != minimumValue;
@@ -183,7 +169,7 @@ namespace Xe.Tools.Wpf.Controls
             var minimumValue = newValue;
             var maximumValue = MaximumValue;
             var value = Value;
-            
+
             if (minimumValue > maximumValue)
                 minimumValue = maximumValue;
             if (minimumValue != oldValue)

@@ -29,7 +29,7 @@ namespace AnimationEditor.ViewModels
     public class FrameViewModel
     {
         private SpriteService _spriteService { get; }
-        
+
         public IFrame Frame { get; set; }
 
         public BitmapSource Sprite => _spriteService[Frame.SpriteSheet, Frame];

@@ -26,10 +26,6 @@
 // it artfully, but instead support it and its author. Thank you.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Xe.Tools.Wpf
 {

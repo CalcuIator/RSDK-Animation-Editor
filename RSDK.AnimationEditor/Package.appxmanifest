@@ -9,7 +9,7 @@
   <Identity
     Name="7c88096c-4876-48a7-9d23-59a15ca8e7fa"
     Publisher="CN=Jd1ex"
-    Version="1.0.0.0" />
+    Version="1.2.3.0" />
 
   <Properties>
     <DisplayName>RSDK.AnimationEditor</DisplayName>

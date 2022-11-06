@@ -1,10 +1,8 @@
-﻿using Microsoft.UI.Windowing;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using RSDK.AnimationEditor.Views;
 using System;
-using Windows.UI.Core;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -20,7 +18,6 @@ namespace RSDK.AnimationEditor
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
-        public static Microsoft.UI.Xaml.Window acwindow { get; set; }
         public App()
         {
             this.InitializeComponent();
@@ -31,11 +28,31 @@ namespace RSDK.AnimationEditor
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
-        protected async override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             Views.Window window = new Views.Window();
-            window.ExtendsContentIntoTitleBar = true;
+            window.Activate();
+
             Frame rootFrame = window.Content as Frame;
+
+            // Do not repeat app initialization when the Window already has content,
+            // just ensure that the window is active
+            if (rootFrame == null)
+            {
+                rootFrame = new Frame();
+                rootFrame.NavigationFailed += OnNavigationFailed;
+                window.Content = rootFrame;
+            }
+            if (rootFrame.Content == null)
+            {
+                rootFrame.Navigate(typeof(MainPage));
+            }
+
+
+            /*Window window = new Views.Window();
+            Frame rootFrame = Window.Current.Content as Frame;
+            //window.Activate();
+            
 
             if (rootFrame == null)
             {
@@ -48,8 +65,8 @@ namespace RSDK.AnimationEditor
             if (rootFrame.Content == null)
             {
                 window.Activate();
-                rootFrame.Navigate(typeof(Views.MainPage)); 
-            }
+                //rootFrame.Navigate(typeof(Views.MainPage));
+            }*/
         }
 
         /// <summary>
@@ -60,19 +77,6 @@ namespace RSDK.AnimationEditor
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
-        }
-
-        private void CenterWindow()
-        {
-            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(acwindow);
-            Microsoft.UI.WindowId W32WindowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
-            AppWindow Win32Window = AppWindow.GetFromWindowId(W32WindowId);
-            DisplayArea displayArea = Microsoft.UI.Windowing.DisplayArea.GetFromWindowId(W32WindowId, Microsoft.UI.Windowing.DisplayAreaFallback.Nearest);
-
-            var StartPos = Win32Window.Position;
-            StartPos.X = ((displayArea.WorkArea.Width - Win32Window.Size.Width) / 2);
-            StartPos.Y = ((displayArea.WorkArea.Height - Win32Window.Size.Height) / 2);
-            Win32Window.Move(StartPos);
         }
     }
 }

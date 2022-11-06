@@ -48,7 +48,7 @@ namespace AnimationEditor.Services
             new Dictionary<string, BitmapSource>(24);
         private Dictionary<Tuple<string, int>, BitmapSource> _frames =
             new Dictionary<Tuple<string, int>, BitmapSource>(1024);
-        
+
         public BitmapSource this[int texture, IFrame frame]
         {
             get

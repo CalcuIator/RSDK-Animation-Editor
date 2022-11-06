@@ -25,7 +25,7 @@ namespace RSDK.AnimationEditor.Views
             DataContext = new MainViewModel();
             MainTitleBar = AppTitleBar;
             Window.XamlWindow.Activated += _Activated;
-            Window.XamlWindow.SetTitleBar(AppTitleBar);
+            //Window.XamlWindow.SetTitleBar(AppTitleBar);
             Window.XamlWindow.TrySetMicaBackdrop();
         }
 
@@ -67,9 +67,9 @@ namespace RSDK.AnimationEditor.Views
                 {
                     //Load file
                     ViewModel.FileOpen(File.Path);
-                    FindName("Column0");
-                    FindName("Column1");
-                    FindName("Column2");
+                    DispatcherQueue.TryEnqueue(() => FindName("Column0"));
+                    DispatcherQueue.TryEnqueue(() => FindName("Column1"));
+                    DispatcherQueue.TryEnqueue(() => FindName("Column2"));
                 }
                 catch (Exception ex)
                 {
@@ -113,6 +113,7 @@ namespace RSDK.AnimationEditor.Views
         private void FileExit_Click(object sender, RoutedEventArgs e)
         {
             Window.XamlWindow.Close();
+            //Window.XamlWindow.AppWindow.Destroy();
         }
 
         private void ViewHitbox_Click(object sender, RoutedEventArgs e)

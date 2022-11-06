@@ -21,11 +21,9 @@
 // SOFTWARE.
 
 using RSDK;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace RSDK5
 {
@@ -36,7 +34,7 @@ namespace RSDK5
         public List<Frame> Frames { get; private set; } = new List<Frame>();
 
         public string Name { get; set; }
-        
+
         public int Speed { get; set; }
 
         public int Loop { get; set; }

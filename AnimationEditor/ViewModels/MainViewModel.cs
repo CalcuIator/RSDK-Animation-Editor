@@ -1,12 +1,9 @@
 ﻿using AnimationEditor.Services;
 using RSDK;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -64,7 +61,7 @@ namespace AnimationEditor.ViewModels
         }
 
         public string Title => string.IsNullOrEmpty(FileName) ? "RSDK Animation Editor" : $"RSDK Animation Editor - {Path.GetFileName(FileName)}";
-        
+
         public ObservableCollection<string> Textures { get; private set; }
 
         public ObservableCollection<IAnimationEntry> Animations { get; private set; }
@@ -174,7 +171,7 @@ namespace AnimationEditor.ViewModels
         }
         public double SpriteScaleX => Zoom;
         public double SpriteScaleY => Zoom;
-        
+
         public bool IsRunning
         {
             get => _animService?.IsRunning ?? false;
@@ -248,7 +245,7 @@ namespace AnimationEditor.ViewModels
         #endregion
 
         #region Selected frame
-        
+
         public bool IsAnimationSelected => SelectedAnimation != null;
 
         public int SelectedFrameIndex

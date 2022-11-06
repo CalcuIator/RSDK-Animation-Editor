@@ -25,8 +25,6 @@
 // Please do not redistribuite this code under your own name, stole it or use
 // it artfully, but instead support it and its author. Thank you.
 
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 
 namespace Xe.Tools.Wpf.Controls

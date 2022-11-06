@@ -147,7 +147,7 @@ namespace AnimationEditor.Services
         public IAnimationEntry CurrentAnimation => _currentAnimation;
 
         public IFrame CurrentFrame => _currentFrame;
-        
+
         /// <summary>
         /// Initialize a new instance of an animation service
         /// </summary>
@@ -158,7 +158,7 @@ namespace AnimationEditor.Services
             Timer = new Timer(1);
             Timer.Elapsed += Timer_Elapsed;
             Stopwatch = new Stopwatch();
-            
+
             _dicAnimations = AnimationData.GetAnimations()
                 .ToDictionary(x => x.Name, x => x);
 

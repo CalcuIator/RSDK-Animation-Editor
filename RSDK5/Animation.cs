@@ -31,7 +31,7 @@ namespace RSDK5
     public class Animation : IAnimation
     {
         const int MagicCode = 0x00525053;
-        
+
         public int Version => 5;
 
         public int TotalFramesCount;

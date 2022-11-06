@@ -1,10 +1,7 @@
 ﻿using RSDK;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AnimationEditor.ViewModels
 {
@@ -85,7 +82,7 @@ namespace AnimationEditor.ViewModels
         public IHitbox SelectedHitboxValue => SelectedHitboxEntryValue.GetHitbox(SelectedHitboxIndex);
 
         #endregion
-        
+
         public HitboxV3EditorViewModel(MainViewModel vm)
         {
             _animationData = vm.AnimationData;

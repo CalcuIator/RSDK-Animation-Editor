@@ -101,7 +101,7 @@ namespace Xe.Tools.Wpf.Dialogs
                     fd = new CommonSaveFileDialog()
                     {
                         AlwaysAppendDefaultExtension = true,
-                        
+
                     };
                     break;
                 case Behavior.Folder:
