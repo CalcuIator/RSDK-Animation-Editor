@@ -697,7 +697,7 @@ namespace AnimationEditor.ViewModels
             OnPropertyChanged(nameof(SelectedAnimationIndex));
             return true;
         }
-
+        /*
         public void MoveIndexUp()
         {
             var index = SelectedAnimationIndex;
@@ -715,7 +715,7 @@ namespace AnimationEditor.ViewModels
             Animations.Move(index, index1);
             SelectedAnimationIndex = index1;
         }
-
+        */
         public void SaveChanges()
         {
             _animationData.SpriteSheets.Clear();

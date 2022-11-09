@@ -14,8 +14,8 @@ namespace RSDK.AnimationEditor.Views
     {
         public Settings()
         {
-            this.InitializeComponent();
-            // Window.XamlWindow.SetTitleBar(DragRegion);
+            InitializeComponent();
+            Window.XamlWindow.SetTitleBar(DragRegion);
 
             var Version = Package.Current.Id.Version;
             AppString.Text = $"RSDK Animation Editor {string.Format("{0}.{1}.{2}", Version.Major, Version.Minor, Version.Build)}";
@@ -73,7 +73,7 @@ namespace RSDK.AnimationEditor.Views
         {
             Frame.GoBack();
             //Page is cached, title bar has to be set again
-            //Window.XamlWindow.SetTitleBar(MainPage.MainTitleBar);
+            Window.XamlWindow.SetTitleBar(MainPage.MainTitleBar);
             UnloadObject(this);
         }
 

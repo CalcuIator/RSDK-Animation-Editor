@@ -11,6 +11,7 @@
       mc:Ignorable="d">
 
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -153,14 +154,6 @@
                     <TextBlock Text="&#xe7a6;"
                                Margin="-7" />
                 </Button>
-                <Button x:Name="indxu"
-                        x:Load="False">
-                    <TextBlock Text="Move index up" />
-                </Button>
-                <Button x:Name="indxd"
-                        x:Load="False">
-                    <TextBlock Text="Move index down" />
-                </Button>
             </StackPanel>
             <Button HorizontalAlignment="Right"
                     Style="{StaticResource MenuButton}"
@@ -179,20 +172,20 @@
         </Grid>
 
         <Grid Grid.Row="2"
-              ColumnSpacing="4"
+              ColumnSpacing="8"
               Padding="8"
               Background="{ThemeResource ContentBackground}"
               x:Name="Content">
-
-            <Grid.BackgroundTransition>
-                <BrushTransition />
-            </Grid.BackgroundTransition>
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
+
+            <Grid.ChildrenTransitions>
+                <EntranceThemeTransition />
+            </Grid.ChildrenTransitions>
 
             <Grid Grid.Column="0"
                   x:Name="Column0"
@@ -206,15 +199,14 @@
                           DisplayMemberPath="Name"
                           Margin="-4,0"
                           SelectedItem="{Binding SelectedAnimation, Mode=TwoWay}"
-                          SelectedIndex="{Binding SelectedAnimationIndex, Mode=TwoWay}"
-                          CacheMode="BitmapCache"
-                          ShowsScrollingPlaceholders="True" />
+                          SelectedIndex="{Binding SelectedAnimationIndex, Mode=TwoWay}">
+                </ListView>
             </Grid>
 
             <Grid x:Name="Column1"
                   x:Load="False"
                   Grid.Column="1"
-                  RowSpacing="6">
+                  RowSpacing="8">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -223,16 +215,11 @@
                 </Grid.RowDefinitions>
 
                 <!--Main canvas-->
-                <Border Background="{ThemeResource LayerFillColorAltBrush}"
-                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                <Border Background="{ThemeResource CanvasBackground}"
+                        BorderBrush="{ThemeResource ControlElevationBorderBrush}"
                         BorderThickness="1"
                         CornerRadius="8"
-                        Grid.Row="0"
-                        Translation="0,0,4">
-
-                    <Border.Shadow>
-                        <ThemeShadow />
-                    </Border.Shadow>
+                        Grid.Row="0">
 
                     <Canvas Background="Transparent">
                         <Image Source="{Binding Sprite}"
@@ -253,17 +240,18 @@
 
                 </Border>
 
-                <Border BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                <Border Background="{ThemeResource ControlFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource ControlElevationBorderBrush}"
                         BorderThickness="1"
                         CornerRadius="8"
                         Grid.Row="1"
-                        Translation="0,0,4">
+                        Translation="0,0,2">
 
                     <Border.Shadow>
                         <ThemeShadow />
                     </Border.Shadow>
 
-                    <ListBox Background="{ThemeResource LayerFillColorAltBrush}"
+                    <ListBox Background="Transparent"
                              ItemsSource="{Binding AnimationFrames}"
                              ItemContainerStyle="{StaticResource ModernListBoxItemStyle}"
                              Padding="4"
@@ -286,12 +274,12 @@
 
                 </Border>
 
-                <Border Background="{ThemeResource LayerFillColorAltBrush}"
-                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                <Border Background="{ThemeResource ControlFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource ControlElevationBorderBrush}"
                         BorderThickness="1"
                         CornerRadius="8"
                         Grid.Row="2"
-                        Translation="0,0,4">
+                        Translation="0,0,2">
 
                     <Border.Shadow>
                         <ThemeShadow />
@@ -375,32 +363,39 @@
                                 Padding="0"
                                 Width="34" />
 
-                        <AppBarSeparator />
+                        <AppBarSeparator x:Load="False"
+                                         x:Name="a" />
 
                         <Button Content="&#xe76b;"
                                 FontSize="16"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
                                 Height="34"
                                 Padding="0"
-                                Width="34" />
+                                Width="34"
+                                x:Load="False"
+                                x:Name="b" />
 
                         <Button Content="&#xe76c;"
                                 FontSize="16"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
                                 Height="34"
                                 Padding="0"
-                                Width="34" />
+                                Width="34"
+                                x:Load="False"
+                                x:Name="c" />
 
                     </Toolkit:WrapPanel>
                 </Border>
 
             </Grid>
 
-            <Grid x:Name="Column2"
-                  x:Load="False"
-                  Grid.Column="2"
+            <Grid Grid.Column="2"
                   RowSpacing="4"
-                  Visibility="{Binding IsAnimationDataLoaded}">
+                  Visibility="{Binding IsAnimationDataLoaded}"
+                  x:Name="Column2"
+                  x:Load="False">
+
+
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -409,23 +404,15 @@
                 </Grid.RowDefinitions>
 
 
-                <Grid Background="{ThemeResource LayerFillColorAltBrush}"
-                      BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                      BorderThickness="1"
-                      CornerRadius="8"
-                      ColumnSpacing="4"
-                      Grid.Row="0"
-                      Padding="6"
-                      Translation="0,0,4">
+                <Grid ColumnSpacing="4"
+                      Grid.Row="0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Grid.Shadow>
-                        <ThemeShadow />
-                    </Grid.Shadow>
+
 
                     <NumberBox Grid.Column="0"
                                Header="Speed"
@@ -443,107 +430,31 @@
 
                 </Grid>
 
-                <Grid Background="{ThemeResource LayerFillColorAltBrush}"
-                      BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                      BorderThickness="1"
-                      CornerRadius="8"
-                      Grid.Row="1"
-                      RowSpacing="4"
-                      ColumnSpacing="4"
-                      Padding="6"
-                      Translation="0,0,4">
+                <Grid Grid.Row="1">
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+                    <NavigationView x:Name="Column2Navigation"
+                                    Visibility="{Binding HitboxV5Visibility}"
+                                    PaneDisplayMode="Top"
+                                    IsSettingsVisible="False"
+                                    IsBackButtonVisible="Collapsed"
+                                    IsBackEnabled="False"
+                                    SelectionChanged="Column2Navigation_SelectionChanged">
+                        <NavigationView.MenuItems>
+                            <NavigationViewItem  Content="Sprite properties"
+                                                 Tag="PropertiesPage"
+                                                 Margin="0,-4" />
+                            <NavigationViewItem  Content="Hitbox"
+                                                 Tag="HitboxPage"
+                                                 Margin="0,-4" />
+                        </NavigationView.MenuItems>
+                        <Frame x:Name="Column2Frame" />
+                    </NavigationView>
 
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.Shadow>
-                        <ThemeShadow />
-                    </Grid.Shadow>
-
-                    <NumberBox Header="X"
-                               Grid.Row="0"
-                               Grid.Column="0"
-                               Minimum="-32768"
-                               Maximum="32767"
-                               SpinButtonPlacementMode="Inline"
-                               Value="{Binding SelectedHitbox.Left, Mode=TwoWay}" />
-
-                    <NumberBox Header="Y"
-                               Grid.Row="0"
-                               Grid.Column="1"
-                               Minimum="-32768"
-                               Maximum="32767"
-                               SpinButtonPlacementMode="Inline"
-                               Value="{Binding SelectedHitbox.Top, Mode=TwoWay}" />
-
-                    <NumberBox Header="Width"
-                               Grid.Row="1"
-                               Grid.Column="0"
-                               Minimum="0"
-                               Maximum="32767"
-                               SpinButtonPlacementMode="Inline"
-                               Value="{Binding SelectedFrameWidth, Mode=TwoWay}" />
-
-                    <NumberBox Header="Height"
-                               Grid.Row="1"
-                               Grid.Column="1"
-                               Minimum="0"
-                               Maximum="32767"
-                               SpinButtonPlacementMode="Inline"
-                               Value="{Binding SelectedFrameHeight, Mode=TwoWay}" />
-
-                    <NumberBox Header="Pivot X"
-                               Grid.Row="2"
-                               Grid.Column="0"
-                               Minimum="-32768"
-                               Maximum="32767"
-                               SpinButtonPlacementMode="Inline"
-                               Value="{Binding SelectedFramePivotX, Mode=TwoWay}" />
-
-                    <NumberBox Header="Pivot Y"
-                               Grid.Row="2"
-                               Grid.Column="1"
-                               Minimum="-32768"
-                               Maximum="32767"
-                               SpinButtonPlacementMode="Inline"
-                               Value="{Binding SelectedFramePivotY, Mode=TwoWay}" />
-
-                    <NumberBox Header="ID"
-                               Grid.Row="3"
-                               Grid.Column="0"
-                               Minimum="0"
-                               Maximum="65535"
-                               SpinButtonPlacementMode="Inline"
-                               Value="{Binding SelectedFrameId, Mode=TwoWay}" />
-
-                    <NumberBox Header="Duration"
-                               Grid.Row="3"
-                               Grid.Column="1"
-                               Minimum="0"
-                               Maximum="65535"
-                               SpinButtonPlacementMode="Inline"
-                               Value="{Binding SelectedFrameDuration, Mode=TwoWay}" />
 
                 </Grid>
 
-                <Grid Background="{ThemeResource LayerFillColorAltBrush}"
-                      BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                      BorderThickness="1"
-                      CornerRadius="8"
-                      Grid.Row="2"
-                      RowSpacing="4"
-                      Padding="6"
-                      Translation="0,0,4">
+                <Grid Grid.Row="2">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -551,11 +462,9 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <Grid.Shadow>
-                        <ThemeShadow />
-                    </Grid.Shadow>
 
                     <ComboBox Grid.Row="0"
+                              Header="Flags"
                               HorizontalAlignment="Stretch"
                               SelectedIndex="{Binding Flags, Mode=TwoWay}">
                         <TextBlock Text="Default behavior" />
@@ -587,65 +496,6 @@
                               ItemsSource="{Binding HitboxTypes}"
                               Visibility="{Binding HitboxV5Visibility}"
                               SelectedIndex="{Binding SelectedHitboxType, Mode=TwoWay}" />
-
-                </Grid>
-
-                <Grid x:Name="OldLayout"
-                      x:Load="False">
-
-                    <Grid.ChildrenTransitions>
-                        <PopupThemeTransition />
-                    </Grid.ChildrenTransitions>
-
-
-                    <Grid Grid.Row="6"
-                          RowSpacing="4"
-                          ColumnSpacing="4"
-                          Visibility="{Binding HitboxV5Visibility}">
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <NumberBox Grid.Column="0"
-                                   Grid.Row="0"
-                                   Header="Left"
-                                   Minimum="-32768"
-                                   Maximum="32767"
-                                   Value="{Binding SelectedHitbox.Left, Mode=TwoWay}"
-                                   SpinButtonPlacementMode="Inline" />
-
-                        <NumberBox Grid.Column="1"
-                                   Grid.Row="0"
-                                   Header="Top"
-                                   Minimum="-32768"
-                                   Maximum="32767"
-                                   Value="{Binding SelectedHitbox.Top, Mode=TwoWay}"
-                                   SpinButtonPlacementMode="Inline" />
-
-                        <NumberBox Grid.Column="0"
-                                   Grid.Row="1"
-                                   Header="Right"
-                                   Minimum="-32768"
-                                   Maximum="32767"
-                                   Value="{Binding SelectedHitbox.Right, Mode=TwoWay}"
-                                   SpinButtonPlacementMode="Inline" />
-
-                        <NumberBox Grid.Column="4"
-                                   Grid.Row="3"
-                                   Header="Bottom"
-                                   Minimum="-32768"
-                                   Maximum="32767"
-                                   Value="{Binding SelectedHitbox.Bottom, Mode=TwoWay}"
-                                   SpinButtonPlacementMode="Inline" />
-
-                    </Grid>
 
                 </Grid>
 

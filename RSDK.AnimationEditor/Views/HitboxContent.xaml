@@ -1,0 +1,62 @@
+﻿<Page x:Class="RSDK.AnimationEditor.Views.HitboxContent"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:RSDK.AnimationEditor.Views"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      NavigationCacheMode="Enabled">
+
+    <ScrollViewer>
+
+        <Grid RowSpacing="4"
+              ColumnSpacing="4"
+              Padding="6">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <NumberBox Grid.Column="0"
+                       Grid.Row="0"
+                       Header="Left"
+                       Minimum="-32768"
+                       Maximum="32767"
+                       Value="{Binding SelectedHitbox.Left, Mode=TwoWay}"
+                       SpinButtonPlacementMode="Inline" />
+
+            <NumberBox Grid.Column="1"
+                       Grid.Row="0"
+                       Header="Top"
+                       Minimum="-32768"
+                       Maximum="32767"
+                       Value="{Binding SelectedHitbox.Top, Mode=TwoWay}"
+                       SpinButtonPlacementMode="Inline" />
+
+            <NumberBox Grid.Column="0"
+                       Grid.Row="1"
+                       Header="Right"
+                       Minimum="-32768"
+                       Maximum="32767"
+                       Value="{Binding SelectedHitbox.Right, Mode=TwoWay}"
+                       SpinButtonPlacementMode="Inline" />
+
+            <NumberBox Grid.Column="4"
+                       Grid.Row="3"
+                       Header="Bottom"
+                       Minimum="-32768"
+                       Maximum="32767"
+                       Value="{Binding SelectedHitbox.Bottom, Mode=TwoWay}"
+                       SpinButtonPlacementMode="Inline" />
+
+        </Grid>
+
+    </ScrollViewer>
+
+</Page>

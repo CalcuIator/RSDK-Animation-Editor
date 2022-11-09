@@ -12,6 +12,10 @@
             <!-- Other app resources here -->
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="CanvasBackground"
+                                     Color="#292929" />
+                    <SolidColorBrush x:Key="CanvasStroke"
+                                     Color="Transparent" />
                     <SolidColorBrush x:Key="DescriptiveValue"
                                      Color="#9E000000" />
                     <SolidColorBrush x:Key="ContentBackground"
@@ -22,6 +26,10 @@
                                      Color="#08000000" />
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="CanvasBackground"
+                                     Color="{ThemeResource CardBackgroundFillColorSecondary}" />
+                    <SolidColorBrush x:Key="CanvasStroke"
+                                     Color="#363636" />
                     <SolidColorBrush x:Key="DescriptiveValue"
                                      Color="#C5FFFFFF" />
                     <SolidColorBrush x:Key="ContentBackground"
@@ -48,6 +56,9 @@
                 </ResourceDictionary>
 
             </ResourceDictionary.ThemeDictionaries>
+
+            <SolidColorBrush x:Key="WindowCaptionBackground">Transparent</SolidColorBrush>
+            <SolidColorBrush x:Key="WindowCaptionBackgroundDisabled">Transparent</SolidColorBrush>
 
             <Thickness x:Key="ExpanderHeaderPadding">0</Thickness>
 

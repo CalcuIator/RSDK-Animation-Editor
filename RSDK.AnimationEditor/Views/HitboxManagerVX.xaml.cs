@@ -24,7 +24,7 @@ namespace RSDK.AnimationEditor.Views
         SystemBackdropConfiguration m_configurationSource;
         public HitboxManagerVX(MainViewModel vm)
         {
-            this.InitializeComponent();
+            InitializeComponent();
             m_wsdqHelper = new WindowsSystemDispatcherQueueHelper();
             m_wsdqHelper.EnsureWindowsSystemDispatcherQueueController();
             TrySetMicaBackdrop();
@@ -63,9 +63,9 @@ namespace RSDK.AnimationEditor.Views
 
                 // Hooking up the policy object
                 m_configurationSource = new Microsoft.UI.Composition.SystemBackdrops.SystemBackdropConfiguration();
-                this.Activated += Window_Activated;
-                this.Closed += Window_Closed;
-                ((FrameworkElement)this.Content).ActualThemeChanged += Window_ThemeChanged;
+                Activated += Window_Activated;
+                Closed += Window_Closed;
+                ((FrameworkElement)Content).ActualThemeChanged += Window_ThemeChanged;
 
                 // Initial configuration state.
                 m_configurationSource.IsInputActive = true;
@@ -97,7 +97,7 @@ namespace RSDK.AnimationEditor.Views
                 m_micaController.Dispose();
                 m_micaController = null;
             }
-            this.Activated -= Window_Activated;
+            Activated -= Window_Activated;
             m_configurationSource = null;
         }
 

@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
 
@@ -21,11 +22,11 @@ namespace RSDK.AnimationEditor.Views
         public static Grid MainTitleBar { get; set; }
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             DataContext = new MainViewModel();
             MainTitleBar = AppTitleBar;
             Window.XamlWindow.Activated += _Activated;
-            //Window.XamlWindow.SetTitleBar(AppTitleBar);
+            Window.XamlWindow.SetTitleBar(AppTitleBar);
             Window.XamlWindow.TrySetMicaBackdrop();
         }
 
@@ -67,9 +68,24 @@ namespace RSDK.AnimationEditor.Views
                 {
                     //Load file
                     ViewModel.FileOpen(File.Path);
+
+                    //This is to avoid freezing the UI thread, it's temporary
+
+                    await Task.Delay(10);
+                    FindName("Column0");
+                    await Task.Delay(5);
+                    FindName("Column2");
+                    await Task.Delay(5);
+                    FindName("Column1");
+
+                    /*
+                    await Task.Delay(7);
                     DispatcherQueue.TryEnqueue(() => FindName("Column0"));
+                    await Task.Delay(7);
                     DispatcherQueue.TryEnqueue(() => FindName("Column1"));
+                    await Task.Delay(7);
                     DispatcherQueue.TryEnqueue(() => FindName("Column2"));
+                    */
                 }
                 catch (Exception ex)
                 {
@@ -220,6 +236,22 @@ namespace RSDK.AnimationEditor.Views
         }
 
         #endregion
+
+        private void Column2Navigation_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            var Content = Column2Frame;
+
+            NavigationViewItem Selection = args.SelectedItem as NavigationViewItem;
+            switch (Selection.Tag.ToString())
+            {
+                case "PropertiesPage":
+                    Content.Navigate(typeof(SpritePropertiesContent));
+                    break;
+                case "HitboxPage":
+                    Content.Navigate(typeof(HitboxContent));
+                    break;
+            }
+        }
 
     }
 }

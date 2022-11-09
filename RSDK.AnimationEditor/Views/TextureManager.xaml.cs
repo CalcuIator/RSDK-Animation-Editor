@@ -36,14 +36,14 @@ namespace RSDK.AnimationEditor.Views
         SystemBackdropConfiguration m_configurationSource;
         public TextureManager(MainViewModel mainViewModel)
         {
-            this.InitializeComponent();
+            InitializeComponent();
             MainViewModel = mainViewModel;
             RootGrid.DataContext = new TextureWindowViewModel(mainViewModel, BasePath);
         }
 
         public TextureManager(MainViewModel mainViewModel, string basePath)
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             BasePath = basePath;
             MainViewModel = mainViewModel;
@@ -157,9 +157,9 @@ namespace RSDK.AnimationEditor.Views
 
                 // Hooking up the policy object
                 m_configurationSource = new Microsoft.UI.Composition.SystemBackdrops.SystemBackdropConfiguration();
-                this.Activated += Window_Activated;
-                this.Closed += Window_Closed;
-                ((FrameworkElement)this.Content).ActualThemeChanged += Window_ThemeChanged;
+                Activated += Window_Activated;
+                Closed += Window_Closed;
+                ((FrameworkElement)Content).ActualThemeChanged += Window_ThemeChanged;
 
                 // Initial configuration state.
                 m_configurationSource.IsInputActive = true;
@@ -191,7 +191,7 @@ namespace RSDK.AnimationEditor.Views
                 m_micaController.Dispose();
                 m_micaController = null;
             }
-            this.Activated -= Window_Activated;
+            Activated -= Window_Activated;
             m_configurationSource = null;
         }
 
@@ -205,7 +205,7 @@ namespace RSDK.AnimationEditor.Views
 
         private void SetConfigurationSourceTheme()
         {
-            switch (((FrameworkElement)this.Content).ActualTheme)
+            switch (((FrameworkElement)Content).ActualTheme)
             {
                 case ElementTheme.Dark: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Dark; break;
                 case ElementTheme.Light: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Light; break;

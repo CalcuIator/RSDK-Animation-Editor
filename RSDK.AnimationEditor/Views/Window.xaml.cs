@@ -1,40 +1,42 @@
-﻿using Microsoft.UI;
-using Microsoft.UI.Composition.SystemBackdrops;
-using Microsoft.UI.Windowing;
+﻿using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
-using System;
+using Microsoft.UI.Xaml.Controls;
 using System.Runtime.InteropServices;
 using WinRT;
-using WinRT.Interop;
 
 namespace RSDK.AnimationEditor.Views
 {
-    public partial class Window : WinUIEx.WindowEx
+    public partial class Window : Microsoft.UI.Xaml.Window
     {
         WindowsSystemDispatcherQueueHelper m_wsdqHelper;
         MicaController m_micaController;
         SystemBackdropConfiguration m_configurationSource;
         public static Window XamlWindow { get; set; }
+        public static Frame RootFrame { get; set; }
         public Window()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             XamlWindow = this;
+            RootFrame = rootFrame;
+            ExtendsContentIntoTitleBar = true;
 
             //this.DispatcherQueue.TryEnqueue(() => CenterWindow());
 
-            if (AppWindowTitleBar.IsCustomizationSupported())
+            /*if (AppWindowTitleBar.IsCustomizationSupported())
             {
                 GetAppWindowForCurrentWindow().TitleBar.ExtendsContentIntoTitleBar = true;
+                GetAppWindowForCurrentWindow().TitleBar.ButtonBackgroundColor = Colors.Transparent;
+                GetAppWindowForCurrentWindow().TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
             }
-            else { }
+            else { }*/
         }
 
-        private AppWindow GetAppWindowForCurrentWindow()
+        /*private AppWindow GetAppWindowForCurrentWindow()
         {
             IntPtr hWnd = WindowNative.GetWindowHandle(this);
             WindowId wndId = Win32Interop.GetWindowIdFromWindow(hWnd);
             return AppWindow.GetFromWindowId(wndId);
-        }
+        }*/
 
         public bool TrySetMicaBackdrop()
         {
@@ -45,9 +47,9 @@ namespace RSDK.AnimationEditor.Views
 
                 // Hooking up the policy object
                 m_configurationSource = new SystemBackdropConfiguration();
-                this.Activated += Window_Activated;
-                this.Closed += Window_Closed;
-                ((FrameworkElement)this.Content).ActualThemeChanged += Window_ThemeChanged;
+                Activated += Window_Activated;
+                Closed += Window_Closed;
+                ((FrameworkElement)Content).ActualThemeChanged += Window_ThemeChanged;
 
                 // Initial configuration state.
                 m_configurationSource.IsInputActive = true;
@@ -79,7 +81,7 @@ namespace RSDK.AnimationEditor.Views
                 m_micaController.Dispose();
                 m_micaController = null;
             }
-            this.Activated -= Window_Activated;
+            Activated -= Window_Activated;
             m_configurationSource = null;
         }
 
@@ -93,7 +95,7 @@ namespace RSDK.AnimationEditor.Views
 
         private void SetConfigurationSourceTheme()
         {
-            switch (((FrameworkElement)this.Content).ActualTheme)
+            switch (((FrameworkElement)Content).ActualTheme)
             {
                 case ElementTheme.Dark: m_configurationSource.Theme = SystemBackdropTheme.Dark; break;
                 case ElementTheme.Light: m_configurationSource.Theme = SystemBackdropTheme.Light; break;

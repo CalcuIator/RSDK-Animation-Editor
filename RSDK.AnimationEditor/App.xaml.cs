@@ -1,8 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Navigation;
 using RSDK.AnimationEditor.Views;
-using System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -20,7 +17,7 @@ namespace RSDK.AnimationEditor
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         /// <summary>
@@ -28,25 +25,15 @@ namespace RSDK.AnimationEditor
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
-        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
+            Windows.ApplicationModel.Core.CoreApplication.EnablePrelaunch(true);
             Views.Window window = new Views.Window();
             window.Activate();
 
-            Frame rootFrame = window.Content as Frame;
+            Views.Window.RootFrame.Navigate(typeof(MainPage));
 
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
-            if (rootFrame == null)
-            {
-                rootFrame = new Frame();
-                rootFrame.NavigationFailed += OnNavigationFailed;
-                window.Content = rootFrame;
-            }
-            if (rootFrame.Content == null)
-            {
-                rootFrame.Navigate(typeof(MainPage));
-            }
+
 
 
             /*Window window = new Views.Window();
@@ -67,16 +54,6 @@ namespace RSDK.AnimationEditor
                 window.Activate();
                 //rootFrame.Navigate(typeof(Views.MainPage));
             }*/
-        }
-
-        /// <summary>
-        /// Invoked when Navigation to a certain page fails
-        /// </summary>
-        /// <param name="sender">The Frame which failed navigation</param>
-        /// <param name="e">Details about the navigation failure</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
-        {
-            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
     }
 }
