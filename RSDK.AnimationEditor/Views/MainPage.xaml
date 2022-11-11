@@ -6,9 +6,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:AnimatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
       xmlns:Toolkit="using:CommunityToolkit.WinUI.UI.Controls"
-      xmlns:ToolkitAnimations="using:CommunityToolkit.WinUI.UI.Animations"
-      NavigationCacheMode="Required"
-      mc:Ignorable="d">
+      mc:Ignorable="d"
+      NavigationCacheMode="Required">
 
     <Grid>
 
@@ -63,7 +62,42 @@
                             <MenuFlyoutSubItem.Icon>
                                 <FontIcon Glyph="&#xe823;" />
                             </MenuFlyoutSubItem.Icon>
-                            <MenuFlyoutItem Text="Not implemented" />
+                            <MenuFlyoutItem Text="Not implemented">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xe8c9;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Text="Desktop\RSDKv4\Data\Animations\Sonic.ani">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xe8a5;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Text="Desktop\RSDKv4\Data\Animations\Knuckles.ani">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xe8a5;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Text="Desktop\RSDKv4\Data\Animations\Sonic - Copy.ani">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xe8a5;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Text="Desktop\RSDKv5\Data\Sprites\Players\Ray.bin">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xe8a5;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Text="Desktop\RSDKv5\Data\Sprites\Players\Knuckles.bin">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xe8a5;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutSeparator />
+                            <MenuFlyoutItem Text="Clear history">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xed60;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
                         </MenuFlyoutSubItem>
                         <MenuFlyoutSeparator />
                         <MenuFlyoutItem Text="Save"

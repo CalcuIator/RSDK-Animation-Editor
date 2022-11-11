@@ -1,0 +1,18 @@
+<Page
+    x:Class="RSDK.AnimationEditor.Views.UpdatePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RSDK.AnimationEditor.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="Black"
+    RequestedTheme="Dark">
+
+    <Grid>
+        <StackPanel Canvas.ZIndex="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Downloading updates - This might take a few minutes." FontSize="28" FontWeight="SemiBold" />
+        </StackPanel>
+        <WebView2 DefaultBackgroundColor="Black" x:Name="CringeView2" x:Load="False" />
+    </Grid>
+</Page>

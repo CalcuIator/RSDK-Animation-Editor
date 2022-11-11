@@ -27,11 +27,11 @@ namespace RSDK.AnimationEditor
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            Windows.ApplicationModel.Core.CoreApplication.EnablePrelaunch(true);
             Views.Window window = new Views.Window();
             window.Activate();
 
             Views.Window.RootFrame.Navigate(typeof(MainPage));
+            //Views.Window.RootFrame.Navigate(typeof(UpdatePage));
 
 
 
