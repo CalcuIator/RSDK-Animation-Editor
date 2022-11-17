@@ -154,6 +154,7 @@ namespace AnimationEditor.ViewModels
 
         public BitmapSource Sprite => _spriteService?[SelectedFrameTexture, _animService.CurrentFrame];
 
+
         public double SpriteLeft => ViewWidth / 2.0 + _animService?.CurrentFrame?.CenterX ?? 0;
         public double SpriteTop => ViewHeight / 2.0 + _animService?.CurrentFrame?.CenterY ?? 0;
         public double SpriteRight => SpriteLeft + _animService?.CurrentFrame?.Width ?? 0;

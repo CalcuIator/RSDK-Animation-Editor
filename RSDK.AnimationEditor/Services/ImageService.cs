@@ -37,23 +37,25 @@ namespace AnimationEditor.Services
     }
     public static class ImageService
     {
-        public static BitmapImage Open(string fileName)
+        public static BitmapSource OpenAsync(string fileName)
         {
             if (System.IO.File.Exists(fileName))
             {
+                /*
                 using (var fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
-                    /*
-                    Even though this looks simple, it
-                    was extremely painful to get WinUI 
-                    to render this :(
-                    */
+                    BitmapDecoder decoder = await BitmapDecoder.CreateAsync((IRandomAccessStream)fStream);
+                    SoftwareBitmap softwareBitmap = await decoder.GetSoftwareBitmapAsync();
 
-                    //TODO : See how original editor decodes the image
-                    //bitmapImage.DecodePixelWidth = 256;
-                    //bitmapImage.DecodePixelHeight = 256;
+                    var result = softwareBitmap;
 
-                    //TODO : Optimize ImageService with async
+                    //return result;
+                }
+                */
+
+                using (var fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+
 
                     BitmapImage Image = new BitmapImage();
                     Image.CreateOptions = BitmapCreateOptions.None;
@@ -63,7 +65,13 @@ namespace AnimationEditor.Services
                     System.Uri uri = new System.Uri(fStream.Name);
                     result.UriSource = uri;
                     return result;
+
+
+                    //var decoder = new BitmapDecoder(fStream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+                    //return decoder.Frame.FirstOrDefault();
+
                 }
+
             }
             else
             {

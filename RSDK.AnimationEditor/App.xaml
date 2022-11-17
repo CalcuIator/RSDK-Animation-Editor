@@ -13,9 +13,9 @@
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">
                     <SolidColorBrush x:Key="CanvasBackground"
-                                     Color="#292929" />
+                                     Color="#383838" />
                     <SolidColorBrush x:Key="CanvasStroke"
-                                     Color="Transparent" />
+                                     Color="#3D3D3D" />
                     <SolidColorBrush x:Key="DescriptiveValue"
                                      Color="#9E000000" />
                     <SolidColorBrush x:Key="ContentBackground"
@@ -24,12 +24,15 @@
                                      Color="#0F000000" />
                     <SolidColorBrush x:Key="ButtonPressedBackground"
                                      Color="#08000000" />
+                    <SolidColorBrush x:Key="MenubarStroke"
+                                     Color="#000000"
+                                     Opacity="0.0578" />
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
                     <SolidColorBrush x:Key="CanvasBackground"
-                                     Color="{ThemeResource CardBackgroundFillColorSecondary}" />
+                                     Color="#202020" />
                     <SolidColorBrush x:Key="CanvasStroke"
-                                     Color="#363636" />
+                                     Color="#303030" />
                     <SolidColorBrush x:Key="DescriptiveValue"
                                      Color="#C5FFFFFF" />
                     <SolidColorBrush x:Key="ContentBackground"
@@ -38,6 +41,9 @@
                                      Color="#1AFFFFFF" />
                     <SolidColorBrush x:Key="ButtonPressedBackground"
                                      Color="#0DFFFFFF" />
+                    <SolidColorBrush x:Key="MenubarStroke"
+                                     Color="#000000"
+                                     Opacity="0.1" />
                 </ResourceDictionary>
 
                 <ResourceDictionary x:Key="HighContrast">
@@ -51,8 +57,8 @@
                                      Color="#1AFFFFFF" />
                     <SolidColorBrush x:Key="ButtonPressedBackground"
                                      Color="#0DFFFFFF" />
-                    <SolidColorBrush x:Key="MenuFlyoutBackground"
-                                     Color="{ThemeResource SystemColorWindowColor}" />
+                    <SolidColorBrush x:Key="MenubarStroke"
+                                     Color="{ThemeResource SystemColorWindowTextColor}" />
                 </ResourceDictionary>
 
             </ResourceDictionary.ThemeDictionaries>
@@ -71,7 +77,7 @@
                 <Setter Property="FontSize"
                         Value="12" />
             </Style>
-            
+
 
             <Style x:Key="SettingsControl"
                    TargetType="Grid">
@@ -328,6 +334,10 @@
                         Value="Local" />
                 <Setter Property="Padding"
                         Value="{StaticResource ListBoxItemPadding}" />
+                <Setter Property="Width"
+                        Value="58" />
+                <Setter Property="Height"
+                        Value="58" />
                 <Setter Property="HorizontalContentAlignment"
                         Value="Left" />
                 <Setter Property="UseSystemFocusVisuals"

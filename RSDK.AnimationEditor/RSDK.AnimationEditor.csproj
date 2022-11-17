@@ -12,14 +12,14 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\OverwriteStyles.xaml" />
     <None Remove="Views\HitboxContent.xaml" />
     <None Remove="Views\HitboxManagerVX.xaml" />
     <None Remove="Views\MainPage.xaml" />
+    <None Remove="Views\MainWindow.xaml" />
     <None Remove="Views\Settings.xaml" />
     <None Remove="Views\SpritePropertiesContent.xaml" />
     <None Remove="Views\TextureManager.xaml" />
-    <None Remove="Views\UpdatePage.xaml" />
-    <None Remove="Views\Window.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,7 +59,7 @@
     <None Update="Assets\SmallIcon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Page Update="Views\UpdatePage.xaml">
+    <Page Update="Resources\OverwriteStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\HitboxContent.xaml">
@@ -68,7 +68,7 @@
     <Page Update="Views\SpritePropertiesContent.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\Window.xaml">
+    <Page Update="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\MainPage.xaml">

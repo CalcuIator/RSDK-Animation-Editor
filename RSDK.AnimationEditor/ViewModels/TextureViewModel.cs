@@ -58,7 +58,7 @@ namespace AnimationEditor.ViewModels
             if (!_isLoaded)
             {
                 _isLoaded = true;
-                Image = ImageService.Open(FileName);
+                Image = ImageService.OpenAsync(FileName);
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using RSDK.AnimationEditor.Views;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -15,6 +16,7 @@ namespace RSDK.AnimationEditor
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
+
         public App()
         {
             InitializeComponent();
@@ -27,33 +29,27 @@ namespace RSDK.AnimationEditor
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            Views.Window window = new Views.Window();
-            window.Activate();
+            MainWindow window = new();
+            Frame rootFrame = window.Content as Frame;
 
-            Views.Window.RootFrame.Navigate(typeof(MainPage));
-            //Views.Window.RootFrame.Navigate(typeof(UpdatePage));
-
-
-
-
-            /*Window window = new Views.Window();
-            Frame rootFrame = Window.Current.Content as Frame;
-            //window.Activate();
-            
+            //m_AppWindow = GetAppWindowForCurrentWindow();
 
             if (rootFrame == null)
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
-                rootFrame.NavigationFailed += OnNavigationFailed;
-                window.Content = rootFrame;
 
+                window.Content = rootFrame;
+                //rootFrame.Background = (Microsoft.UI.Xaml.Media.Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"];
             }
             if (rootFrame.Content == null)
             {
+                rootFrame.Navigate(typeof(Views.MainPage));
                 window.Activate();
-                //rootFrame.Navigate(typeof(Views.MainPage));
-            }*/
+            }
         }
+
+
+
     }
 }

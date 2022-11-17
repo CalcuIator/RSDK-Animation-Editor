@@ -6,7 +6,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:AnimatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
       xmlns:Toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+      xmlns:ToolkitAnimations="using:CommunityToolkit.WinUI.UI.Animations"
       mc:Ignorable="d"
+      Loaded="_Loaded"
       NavigationCacheMode="Required">
 
     <Grid>
@@ -43,9 +45,14 @@
 
         <Grid Grid.Row="1"
               x:Name="MenuBarContainer"
-              BorderBrush="{ThemeResource CardStrokeColorDefault}"
+              BorderBrush="{ThemeResource MenubarStroke}"
               BorderThickness="0,0,0,1">
-            <StackPanel Orientation="Horizontal">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0"
+                        Orientation="Horizontal">
                 <MenuBar>
                     <MenuBarItem Title="File">
                         <MenuFlyoutItem Text="Open"
@@ -189,9 +196,10 @@
                                Margin="-7" />
                 </Button>
             </StackPanel>
-            <Button HorizontalAlignment="Right"
-                    Style="{StaticResource MenuButton}"
-                    Click="Settings_Click">
+            <Button Click="Settings_Click"
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    Style="{StaticResource MenuButton}">
                 <AnimatedIcon Width="16"
                               Margin="-5"
                               AnimatedIcon.State="Normal">
@@ -211,10 +219,14 @@
               Background="{ThemeResource ContentBackground}"
               x:Name="Content">
 
+            <Grid.BackgroundTransition>
+                <BrushTransition />
+            </Grid.BackgroundTransition>
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="4*" />
                 <ColumnDefinition Width="3*" />
-                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
             <Grid.ChildrenTransitions>
@@ -250,10 +262,20 @@
 
                 <!--Main canvas-->
                 <Border Background="{ThemeResource CanvasBackground}"
-                        BorderBrush="{ThemeResource ControlElevationBorderBrush}"
+                        BackgroundSizing="OuterBorderEdge"
+                        BorderBrush="{ThemeResource CanvasStroke}"
                         BorderThickness="1"
                         CornerRadius="8"
-                        Grid.Row="0">
+                        Grid.Row="0"
+                        Translation="0,0,8">
+
+                    <Border.BackgroundTransition>
+                        <BrushTransition />
+                    </Border.BackgroundTransition>
+
+                    <Border.Shadow>
+                        <ThemeShadow />
+                    </Border.Shadow>
 
                     <Canvas Background="Transparent">
                         <Image Source="{Binding Sprite}"
@@ -274,12 +296,12 @@
 
                 </Border>
 
-                <Border Background="{ThemeResource ControlFillColorDefaultBrush}"
+                <Border Background="{ThemeResource LayerFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource ControlElevationBorderBrush}"
                         BorderThickness="1"
                         CornerRadius="8"
                         Grid.Row="1"
-                        Translation="0,0,2">
+                        Translation="0,0,3">
 
                     <Border.Shadow>
                         <ThemeShadow />
@@ -308,12 +330,16 @@
 
                 </Border>
 
-                <Border Background="{ThemeResource ControlFillColorDefaultBrush}"
+                <Border Background="{ThemeResource LayerFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource ControlElevationBorderBrush}"
                         BorderThickness="1"
                         CornerRadius="8"
                         Grid.Row="2"
-                        Translation="0,0,2">
+                        Translation="0,0,3">
+
+                    <Border.BackgroundTransition>
+                        <BrushTransition />
+                    </Border.BackgroundTransition>
 
                     <Border.Shadow>
                         <ThemeShadow />
@@ -325,39 +351,39 @@
                                        HorizontalSpacing="4">
 
                         <Toolkit:WrapPanel.ChildrenTransitions>
-                            <ReorderThemeTransition />
+                            <RepositionThemeTransition IsStaggeringEnabled="False" />
                         </Toolkit:WrapPanel.ChildrenTransitions>
 
                         <ToggleButton Content="&#xf5b0;"
                                       FontSize="16"
                                       FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                      Height="34"
+                                      Height="32"
                                       IsChecked="{Binding IsRunning, Mode=TwoWay}"
                                       Padding="0"
-                                      Width="34" />
+                                      Width="32" />
 
                         <AppBarSeparator />
 
                         <Button Content="&#xe8a3;"
                                 FontSize="16"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="34"
+                                Height="32"
                                 Padding="0"
-                                Width="34" />
+                                Width="32" />
 
                         <Button Content="&#xe71f;"
                                 FontSize="16"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="34"
+                                Height="32"
                                 Padding="0"
-                                Width="34" />
+                                Width="32" />
 
                         <Button Content="&#xe71e;"
                                 FontSize="16"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="34"
+                                Height="32"
                                 Padding="0"
-                                Width="34">
+                                Width="32">
                         </Button>
 
                         <AppBarSeparator />
@@ -365,37 +391,37 @@
                         <Button Content="&#xe710;"
                                 FontSize="16"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="34"
+                                Height="32"
                                 Padding="0"
-                                Width="34" />
+                                Width="32" />
 
                         <Button Content="&#xe74d;"
                                 FontSize="16"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="34"
+                                Height="32"
                                 Padding="0"
-                                Width="34" />
+                                Width="32" />
 
                         <Button Content="&#xe8c8;"
                                 FontSize="16"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="34"
+                                Height="32"
                                 Padding="0"
-                                Width="34" />
+                                Width="32" />
 
                         <Button Content="&#xe8b5;"
                                 FontSize="16"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="34"
+                                Height="32"
                                 Padding="0"
-                                Width="34" />
+                                Width="32" />
 
                         <Button Content="&#xede1;"
                                 FontSize="16"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="34"
+                                Height="32"
                                 Padding="0"
-                                Width="34" />
+                                Width="32" />
 
                         <AppBarSeparator x:Load="False"
                                          x:Name="a" />
@@ -403,18 +429,18 @@
                         <Button Content="&#xe76b;"
                                 FontSize="16"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="34"
+                                Height="32"
                                 Padding="0"
-                                Width="34"
+                                Width="32"
                                 x:Load="False"
                                 x:Name="b" />
 
                         <Button Content="&#xe76c;"
                                 FontSize="16"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="34"
+                                Height="32"
                                 Padding="0"
-                                Width="34"
+                                Width="32"
                                 x:Load="False"
                                 x:Name="c" />
 
@@ -428,8 +454,6 @@
                   Visibility="{Binding IsAnimationDataLoaded}"
                   x:Name="Column2"
                   x:Load="False">
-
-
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

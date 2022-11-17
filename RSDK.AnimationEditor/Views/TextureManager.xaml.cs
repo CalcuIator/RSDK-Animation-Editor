@@ -1,5 +1,4 @@
 ﻿using AnimationEditor.ViewModels;
-using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -28,7 +27,6 @@ namespace RSDK.AnimationEditor.Views
             set => ViewModel.SelectedIndex = value;
         }
 
-        private AppWindow m_AppWindow;
         public TextureManager(MainViewModel mainViewModel)
         {
             InitializeComponent();
@@ -43,20 +41,6 @@ namespace RSDK.AnimationEditor.Views
             BasePath = basePath;
             MainViewModel = mainViewModel;
             RootGrid.DataContext = new TextureWindowViewModel(mainViewModel, BasePath);
-
-            m_AppWindow = GetAppWindowForCurrentWindow();
-
-            var titleBar = m_AppWindow.TitleBar;
-            titleBar.ExtendsContentIntoTitleBar = true;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-        }
-
-        private AppWindow GetAppWindowForCurrentWindow()
-        {
-            IntPtr hWnd = WindowNative.GetWindowHandle(this);
-            WindowId wndId = Win32Interop.GetWindowIdFromWindow(hWnd);
-            return AppWindow.GetFromWindowId(wndId);
         }
 
         #region Functionality
@@ -84,6 +68,7 @@ namespace RSDK.AnimationEditor.Views
                 try
                 {
                     ViewModel.AddTexture(File.Path);
+                    SelectedIndex = ViewModel.Count - 1;
                 }
                 catch (Exception ex)
                 {

@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
@@ -18,16 +19,22 @@ namespace RSDK.AnimationEditor.Views
     /// </summary>
     public sealed partial class MainPage : Page
     {
+
         private MainViewModel ViewModel => (MainViewModel)DataContext;
         public static Grid MainTitleBar { get; set; }
+
         public MainPage()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
             MainTitleBar = AppTitleBar;
-            Window.XamlWindow.Activated += _Activated;
-            Window.XamlWindow.SetTitleBar(AppTitleBar);
-            Window.XamlWindow.TrySetMicaBackdrop();
+        }
+
+        private void _Loaded(object sender, RoutedEventArgs e)
+        {
+            DataContext = new MainViewModel();
+            MainWindow.XamlWindow.Activated += _Activated;
+            //MainWindow.XamlWindow.SetTitleBar(AppTitleBar);
+            MainWindow.XamlWindow.TrySetMicaBackdrop();
         }
 
         private void _Activated(object sender, WindowActivatedEventArgs args)
@@ -48,6 +55,7 @@ namespace RSDK.AnimationEditor.Views
 
         private async void FileOpen_Click(object sender, RoutedEventArgs e)
         {
+
             //var fd = Xe.Tools.Wpf.Dialogs.FileDialog.Factory(this,
             //    Xe.Tools.Wpf.Dialogs.FileDialog.Behavior.Open,
             //    Xe.Tools.Wpf.Dialogs.FileDialog.Type.Any, false);
@@ -56,36 +64,28 @@ namespace RSDK.AnimationEditor.Views
             //    ViewModel.FileOpen(fd.FileName);
             //}
 
-            FileOpenPicker Picker = new();
+            var Picker = new FileOpenPicker();
             Picker.FileTypeFilter.Add(".ani");
             Picker.FileTypeFilter.Add(".bin");
-            IntPtr hwnd = WindowNative.GetWindowHandle(Window.XamlWindow);
+            IntPtr hwnd = WindowNative.GetWindowHandle(MainWindow.XamlWindow);
             InitializeWithWindow.Initialize(Picker, hwnd);
+
             Windows.Storage.StorageFile File = await Picker.PickSingleFileAsync();
+
             if (File != null)
             {
                 try
                 {
                     //Load file
                     ViewModel.FileOpen(File.Path);
-
-                    //This is to avoid freezing the UI thread, it's temporary
-
-                    await Task.Delay(10);
-                    FindName("Column0");
-                    await Task.Delay(5);
-                    FindName("Column2");
-                    await Task.Delay(5);
-                    FindName("Column1");
-
-                    /*
-                    await Task.Delay(7);
-                    DispatcherQueue.TryEnqueue(() => FindName("Column0"));
-                    await Task.Delay(7);
-                    DispatcherQueue.TryEnqueue(() => FindName("Column1"));
-                    await Task.Delay(7);
-                    DispatcherQueue.TryEnqueue(() => FindName("Column2"));
-                    */
+                    DispatcherQueue.TryEnqueue(async () =>
+                    {
+                        FindName("Column0");
+                        await Task.Delay(10);
+                        FindName("Column1");
+                        await Task.Delay(10);
+                        FindName("Column2");
+                    });
                 }
                 catch (Exception ex)
                 {
@@ -128,8 +128,7 @@ namespace RSDK.AnimationEditor.Views
 
         private void FileExit_Click(object sender, RoutedEventArgs e)
         {
-            Window.XamlWindow.Close();
-            //Window.XamlWindow.AppWindow.Destroy();
+            MainWindow.XamlWindow.Close();
         }
 
         private void ViewHitbox_Click(object sender, RoutedEventArgs e)
@@ -140,7 +139,7 @@ namespace RSDK.AnimationEditor.Views
             }
             else if (ViewModel.IsHitboxV5)
             {
-                //new Hitbox5Window(ViewModel).Show();
+                //new HitboxManagerV5(ViewModel).Activate();
             }
         }
 
@@ -152,7 +151,6 @@ namespace RSDK.AnimationEditor.Views
                 var Window = new TextureManager(ViewModel, basePath);
 
                 Window.Activate();
-
             }
         }
 
@@ -252,6 +250,5 @@ namespace RSDK.AnimationEditor.Views
                     break;
             }
         }
-
     }
 }

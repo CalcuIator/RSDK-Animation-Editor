@@ -1,13 +1,17 @@
-﻿<Window
+﻿<WinUIEx:WindowEx
     x:Class="RSDK.AnimationEditor.Views.HitboxManagerVX"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:RSDK.AnimationEditor.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    xmlns:WinUIEx="using:WinUIEx"
+    mc:Ignorable="d"
+    IsAlwaysOnTop="True"
+    Width="650"
+    Height="480">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="RootGrid">
+    <Grid x:Name="RootGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -101,4 +105,4 @@
             </Grid>
         </Grid>
     </Grid>
-</Window>
+</WinUIEx:WindowEx>

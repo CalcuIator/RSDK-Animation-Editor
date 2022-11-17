@@ -66,6 +66,11 @@ namespace AnimationEditor.Services
                     var textureBitmap = GetTexture(texture);
                     try
                     {
+
+
+
+
+
                         //bitmap = new CroppedBitmap(textureBitmap,
                         //new Int32Rect()
                         //{
