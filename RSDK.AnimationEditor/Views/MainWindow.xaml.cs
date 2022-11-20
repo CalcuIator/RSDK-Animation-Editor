@@ -1,6 +1,7 @@
 ﻿using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Runtime.InteropServices;
 using WinRT;
@@ -23,6 +24,9 @@ namespace RSDK.AnimationEditor.Views
             m_AppWindow = GetAppWindowForCurrentWindow();
             var titleBar = m_AppWindow.TitleBar;
             titleBar.ExtendsContentIntoTitleBar = true;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            //ExtendsContentIntoTitleBar = true;
         }
         private AppWindow GetAppWindowForCurrentWindow()
         {
@@ -83,6 +87,7 @@ namespace RSDK.AnimationEditor.Views
             {
                 SetConfigurationSourceTheme();
             }
+
         }
         private void SetConfigurationSourceTheme()
         {

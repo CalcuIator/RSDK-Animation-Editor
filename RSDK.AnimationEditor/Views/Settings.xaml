@@ -57,13 +57,7 @@
             <Grid x:Name="RootContainer"
                   Margin="0,28,0,0"
                   RenderTransformOrigin="0.5,0.5">
-                
-                <!--
-                <Grid.ChildrenTransitions>
-                    <ReorderThemeTransition />
-                </Grid.ChildrenTransitions>
-                -->
-                
+
                 <Grid.RenderTransform>
                     <TranslateTransform x:Name="RootTranslateTransform" />
                 </Grid.RenderTransform>
@@ -84,29 +78,17 @@
                       Grid.Row="1"
                       Margin="52,24"
                       ColumnSpacing="56">
-                    
-                    <!--
-                    <Grid.ChildrenTransitions>
-                        <ReorderThemeTransition />
-                    </Grid.ChildrenTransitions>
-                    -->
-                    
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <StackPanel Spacing="4">
-
-                        <!--
-                        <StackPanel.ChildrenTransitions>
-                            <ReorderThemeTransition />
-                        </StackPanel.ChildrenTransitions>
-                        -->
 
                         <Expander HorizontalAlignment="Stretch"
                                   HorizontalContentAlignment="Left"
@@ -170,7 +152,7 @@
                             </StackPanel>
                             <ToggleSwitch Grid.Column="2" />
                         </Grid>
-                        
+
                         <!--Bilinear-->
                         <Grid Style="{StaticResource SettingsControl}">
                             <Grid.ColumnDefinitions>

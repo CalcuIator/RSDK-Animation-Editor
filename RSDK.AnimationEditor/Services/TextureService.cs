@@ -67,10 +67,6 @@ namespace AnimationEditor.Services
                     try
                     {
 
-
-
-
-
                         //bitmap = new CroppedBitmap(textureBitmap,
                         //new Int32Rect()
                         //{
@@ -106,7 +102,7 @@ namespace AnimationEditor.Services
             if (_textures.TryGetValue(name, out var bitmap))
                 return bitmap;
             var fileName = Path.Combine(BasePath, name);
-            //bitmap = ImageService.Open(fileName);
+            bitmap = (BitmapSource)ImageService.Open(fileName);
             _textures.Add(name, bitmap);
             return bitmap;
         }

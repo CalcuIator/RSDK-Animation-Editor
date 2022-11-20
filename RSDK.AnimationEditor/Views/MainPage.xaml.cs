@@ -1,10 +1,10 @@
 ﻿using AnimationEditor.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
@@ -80,10 +80,11 @@ namespace RSDK.AnimationEditor.Views
                     ViewModel.FileOpen(File.Path);
                     DispatcherQueue.TryEnqueue(async () =>
                     {
+                        await Task.Delay(16);
                         FindName("Column0");
-                        await Task.Delay(10);
+                        await Task.Delay(16);
                         FindName("Column1");
-                        await Task.Delay(10);
+                        await Task.Delay(16);
                         FindName("Column2");
                     });
                 }
@@ -143,14 +144,31 @@ namespace RSDK.AnimationEditor.Views
             }
         }
 
-        private void ViewTexture_Click(object sender, RoutedEventArgs e)
+        private async void ViewTexture_Click(object sender, RoutedEventArgs e)
         {
             if (ViewModel.IsAnimationDataLoaded)
             {
                 var basePath = Path.Combine(Path.GetDirectoryName(ViewModel.FileName), ViewModel.PathMod);
-                var Window = new TextureManager(ViewModel, basePath);
+                var content = new TextureManager(ViewModel, basePath);
 
-                Window.Activate();
+                ContentDialog Dialog = new ContentDialog();
+
+                Dialog.XamlRoot = XamlRoot;
+
+                Dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                Dialog.Title = "Something went wrong";
+                Dialog.Content = content;
+
+                Dialog.CloseButtonText = "*";
+
+
+                var result = await Dialog.ShowAsync();
+                if (result == ContentDialogResult.Primary)
+                {
+                    //UnloadObject(Dialog);
+                }
+
+                //Window.Activate();
             }
         }
 
@@ -176,7 +194,7 @@ namespace RSDK.AnimationEditor.Views
             FileOpenPicker Picker = new();
             Picker.FileTypeFilter.Add(".ani");
             Picker.FileTypeFilter.Add(".bin");
-            IntPtr hwnd = WindowNative.GetWindowHandle(this);
+            IntPtr hwnd = WindowNative.GetWindowHandle(MainWindow.XamlWindow);
             InitializeWithWindow.Initialize(Picker, hwnd);
             Windows.Storage.StorageFile File = await Picker.PickSingleFileAsync();
             if (File != null)
@@ -235,20 +253,22 @@ namespace RSDK.AnimationEditor.Views
 
         #endregion
 
-        private void Column2Navigation_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private void SegmentedControl_Loaded(object sender, RoutedEventArgs e)
         {
-            var Content = Column2Frame;
+            Column2Frame.Navigate(typeof(SpritePropertiesContent));
+        }
+        private async void SegmentedColumn0_Clicked(object sender, RoutedEventArgs e)
+        {
+            Grid.SetColumn(SegmentedSelection, 0);
+            await Task.Delay(10);
+            Column2Frame.Navigate(typeof(SpritePropertiesContent));
+        }
 
-            NavigationViewItem Selection = args.SelectedItem as NavigationViewItem;
-            switch (Selection.Tag.ToString())
-            {
-                case "PropertiesPage":
-                    Content.Navigate(typeof(SpritePropertiesContent));
-                    break;
-                case "HitboxPage":
-                    Content.Navigate(typeof(HitboxContent));
-                    break;
-            }
+        private async void SegmentedColumn1_Clicked(object sender, RoutedEventArgs e)
+        {
+            Grid.SetColumn(SegmentedSelection, 1);
+            await Task.Delay(10);
+            Column2Frame.Navigate(typeof(HitboxContent));
         }
     }
 }

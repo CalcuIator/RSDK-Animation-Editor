@@ -13,6 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\OverwriteStyles.xaml" />
+    <None Remove="Resources\Styles.xaml" />
     <None Remove="Views\HitboxContent.xaml" />
     <None Remove="Views\HitboxManagerVX.xaml" />
     <None Remove="Views\MainPage.xaml" />
@@ -59,6 +60,9 @@
     <None Update="Assets\SmallIcon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Resources\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Resources\OverwriteStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -26,7 +26,7 @@
 // it artfully, but instead support it and its author. Thank you.
 
 using Microsoft.UI.Xaml.Media.Imaging;
-using System.Diagnostics;
+using System;
 using System.IO;
 
 namespace AnimationEditor.Services
@@ -37,7 +37,7 @@ namespace AnimationEditor.Services
     }
     public static class ImageService
     {
-        public static BitmapSource OpenAsync(string fileName)
+        public static BitmapSource Open(string fileName)
         {
             if (System.IO.File.Exists(fileName))
             {
@@ -53,29 +53,21 @@ namespace AnimationEditor.Services
                 }
                 */
 
+
                 using (var fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
-
-
+                    //Temp :/
                     BitmapImage Image = new BitmapImage();
                     Image.CreateOptions = BitmapCreateOptions.None;
-
-
+                    Image.UriSource = new Uri(fStream.Name);
                     var result = Image;
-                    System.Uri uri = new System.Uri(fStream.Name);
-                    result.UriSource = uri;
                     return result;
-
-
-                    //var decoder = new BitmapDecoder(fStream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
-                    //return decoder.Frame.FirstOrDefault();
-
                 }
 
             }
             else
             {
-                Debug.WriteLine($"Texture file {fileName} not found.");
+                //Debug.WriteLine($"Texture file {fileName} not found.");
             }
             return null;
         }

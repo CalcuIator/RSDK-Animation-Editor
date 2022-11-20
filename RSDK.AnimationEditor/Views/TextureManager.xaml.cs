@@ -1,11 +1,9 @@
 ﻿using AnimationEditor.ViewModels;
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
-using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -15,10 +13,10 @@ namespace RSDK.AnimationEditor.Views
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class TextureManager : WindowEx
+    public sealed partial class TextureManager : Page
     {
         public string BasePath { get; private set; }
-        public TextureWindowViewModel ViewModel => RootGrid.DataContext as TextureWindowViewModel;
+        public TextureWindowViewModel ViewModel => DataContext as TextureWindowViewModel;
         public MainViewModel MainViewModel { get; }
 
         public int SelectedIndex
@@ -31,7 +29,7 @@ namespace RSDK.AnimationEditor.Views
         {
             InitializeComponent();
             MainViewModel = mainViewModel;
-            RootGrid.DataContext = new TextureWindowViewModel(mainViewModel, BasePath);
+            DataContext = new TextureWindowViewModel(mainViewModel, BasePath);
         }
 
         public TextureManager(MainViewModel mainViewModel, string basePath)
@@ -40,7 +38,7 @@ namespace RSDK.AnimationEditor.Views
 
             BasePath = basePath;
             MainViewModel = mainViewModel;
-            RootGrid.DataContext = new TextureWindowViewModel(mainViewModel, BasePath);
+            DataContext = new TextureWindowViewModel(mainViewModel, BasePath);
         }
 
         #region Functionality
@@ -60,7 +58,7 @@ namespace RSDK.AnimationEditor.Views
             FileOpenPicker Picker = new();
             Picker.ViewMode = PickerViewMode.Thumbnail;
             Picker.FileTypeFilter.Add(".gif");
-            IntPtr hwnd = WindowNative.GetWindowHandle(this);
+            IntPtr hwnd = WindowNative.GetWindowHandle(MainWindow.XamlWindow);
             InitializeWithWindow.Initialize(Picker, hwnd);
             Windows.Storage.StorageFile File = await Picker.PickSingleFileAsync();
             if (File != null)
@@ -105,9 +103,11 @@ namespace RSDK.AnimationEditor.Views
                     index--;
                 SelectedIndex = index;
             }*/
+
+            /*
             ContentDialog Dialog = new ContentDialog();
 
-            Dialog.XamlRoot = RootGrid.XamlRoot;
+            Dialog.XamlRoot = MainWindow.XamlWindow.Content.XamlRoot;
             Dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
             Dialog.Title = "Remove file?";
             Dialog.Content = $"{ViewModel.SelectedValue} will be removed from the list. This does not delete the file.";
@@ -119,6 +119,11 @@ namespace RSDK.AnimationEditor.Views
                 ViewModel.RemoveTexture(SelectedIndex, false);
                 //UnloadObject(Dialog);
             }
+            */
+
+            //ConfirmDelete.IsOpen = true;
+
+
         }
 
         #endregion

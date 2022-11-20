@@ -6,8 +6,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:AnimatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
       xmlns:Toolkit="using:CommunityToolkit.WinUI.UI.Controls"
-      xmlns:ToolkitAnimations="using:CommunityToolkit.WinUI.UI.Animations"
       mc:Ignorable="d"
+      UseLayoutRounding="True"
       Loaded="_Loaded"
       NavigationCacheMode="Required">
 
@@ -53,7 +53,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0"
                         Orientation="Horizontal">
-                <MenuBar>
+                <MenuBar FontFamily="Segoe UI">
                     <MenuBarItem Title="File">
                         <MenuFlyoutItem Text="Open"
                                         Click="FileOpen_Click">
@@ -65,40 +65,11 @@
                                                      Key="O" />
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutSubItem Text="Recent">
+                        <MenuFlyoutSubItem Text="Recent"
+                                           IsEnabled="False">
                             <MenuFlyoutSubItem.Icon>
                                 <FontIcon Glyph="&#xe823;" />
                             </MenuFlyoutSubItem.Icon>
-                            <MenuFlyoutItem Text="Not implemented">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xe8c9;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                            <MenuFlyoutItem Text="Desktop\RSDKv4\Data\Animations\Sonic.ani">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xe8a5;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                            <MenuFlyoutItem Text="Desktop\RSDKv4\Data\Animations\Knuckles.ani">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xe8a5;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                            <MenuFlyoutItem Text="Desktop\RSDKv4\Data\Animations\Sonic - Copy.ani">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xe8a5;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                            <MenuFlyoutItem Text="Desktop\RSDKv5\Data\Sprites\Players\Ray.bin">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xe8a5;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                            <MenuFlyoutItem Text="Desktop\RSDKv5\Data\Sprites\Players\Knuckles.bin">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xe8a5;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
                             <MenuFlyoutSeparator />
                             <MenuFlyoutItem Text="Clear history">
                                 <MenuFlyoutItem.Icon>
@@ -234,6 +205,7 @@
             </Grid.ChildrenTransitions>
 
             <Grid Grid.Column="0"
+                  CornerRadius="4"
                   x:Name="Column0"
                   x:Load="False">
                 <Grid.RowDefinitions>
@@ -269,10 +241,6 @@
                         Grid.Row="0"
                         Translation="0,0,8">
 
-                    <Border.BackgroundTransition>
-                        <BrushTransition />
-                    </Border.BackgroundTransition>
-
                     <Border.Shadow>
                         <ThemeShadow />
                     </Border.Shadow>
@@ -297,11 +265,12 @@
                 </Border>
 
                 <Border Background="{ThemeResource LayerFillColorDefaultBrush}"
+                        BackgroundSizing="OuterBorderEdge"
                         BorderBrush="{ThemeResource ControlElevationBorderBrush}"
                         BorderThickness="1"
                         CornerRadius="8"
                         Grid.Row="1"
-                        Translation="0,0,3">
+                        Translation="0,0,4">
 
                     <Border.Shadow>
                         <ThemeShadow />
@@ -331,15 +300,12 @@
                 </Border>
 
                 <Border Background="{ThemeResource LayerFillColorDefaultBrush}"
+                        BackgroundSizing="OuterBorderEdge"
                         BorderBrush="{ThemeResource ControlElevationBorderBrush}"
                         BorderThickness="1"
                         CornerRadius="8"
                         Grid.Row="2"
-                        Translation="0,0,3">
-
-                    <Border.BackgroundTransition>
-                        <BrushTransition />
-                    </Border.BackgroundTransition>
+                        Translation="0,0,4">
 
                     <Border.Shadow>
                         <ThemeShadow />
@@ -354,74 +320,61 @@
                             <RepositionThemeTransition IsStaggeringEnabled="False" />
                         </Toolkit:WrapPanel.ChildrenTransitions>
 
+                        <Toolkit:WrapPanel.Resources>
+                            <ResourceDictionary>
+                                <Style BasedOn="{StaticResource DefaultButtonStyle}"
+                                       TargetType="Button">
+                                    <Setter Property="FontFamily"
+                                            Value="{StaticResource SymbolThemeFontFamily}" />
+                                    <Setter Property="FontSize"
+                                            Value="16" />
+                                    <Setter Property="Height"
+                                            Value="30" />
+                                    <Setter Property="Padding"
+                                            Value="0" />
+                                    <Setter Property="Width"
+                                            Value="30" />
+
+                                </Style>
+
+                                <Style BasedOn="{StaticResource DefaultToggleButtonStyle}"
+                                       TargetType="ToggleButton">
+                                    <Setter Property="FontFamily"
+                                            Value="{StaticResource SymbolThemeFontFamily}" />
+                                    <Setter Property="FontSize"
+                                            Value="16" />
+                                    <Setter Property="Height"
+                                            Value="30" />
+                                    <Setter Property="Padding"
+                                            Value="0" />
+                                    <Setter Property="Width"
+                                            Value="30" />
+                                </Style>
+                            </ResourceDictionary>
+                        </Toolkit:WrapPanel.Resources>
+
                         <ToggleButton Content="&#xf5b0;"
-                                      FontSize="16"
-                                      FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                      Height="32"
-                                      IsChecked="{Binding IsRunning, Mode=TwoWay}"
-                                      Padding="0"
-                                      Width="32" />
+                                      IsChecked="{Binding IsRunning, Mode=TwoWay}" />
 
                         <AppBarSeparator />
 
-                        <Button Content="&#xe8a3;"
-                                FontSize="16"
-                                FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="32"
-                                Padding="0"
-                                Width="32" />
+                        <Button Content="&#xe8a3;" />
 
-                        <Button Content="&#xe71f;"
-                                FontSize="16"
-                                FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="32"
-                                Padding="0"
-                                Width="32" />
+                        <Button Content="&#xe71f;" />
 
-                        <Button Content="&#xe71e;"
-                                FontSize="16"
-                                FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="32"
-                                Padding="0"
-                                Width="32">
-                        </Button>
+                        <Button Content="&#xe71e;" />
 
                         <AppBarSeparator />
 
-                        <Button Content="&#xe710;"
-                                FontSize="16"
-                                FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="32"
-                                Padding="0"
-                                Width="32" />
+                        <Button Content="&#xe710;" />
 
-                        <Button Content="&#xe74d;"
-                                FontSize="16"
-                                FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="32"
-                                Padding="0"
-                                Width="32" />
+                        <Button Content="&#xe74d;" />
 
-                        <Button Content="&#xe8c8;"
-                                FontSize="16"
-                                FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="32"
-                                Padding="0"
-                                Width="32" />
+                        <Button Content="&#xe8c8;" />
 
-                        <Button Content="&#xe8b5;"
-                                FontSize="16"
-                                FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="32"
-                                Padding="0"
-                                Width="32" />
+                        <Button Content="&#xe8b5;" />
 
-                        <Button Content="&#xede1;"
-                                FontSize="16"
-                                FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="32"
-                                Padding="0"
-                                Width="32" />
+                        <Button Content="&#xede1;" />
 
                         <AppBarSeparator x:Load="False"
                                          x:Name="a" />
@@ -429,18 +382,14 @@
                         <Button Content="&#xe76b;"
                                 FontSize="16"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="32"
                                 Padding="0"
-                                Width="32"
                                 x:Load="False"
                                 x:Name="b" />
 
                         <Button Content="&#xe76c;"
                                 FontSize="16"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Height="32"
                                 Padding="0"
-                                Width="32"
                                 x:Load="False"
                                 x:Name="c" />
 
@@ -488,27 +437,96 @@
 
                 </Grid>
 
+
+
                 <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <!--
+                    Didn't want to make a custom control,
+                    so here's a fake segmented control lol
+                    I might try to make a real control in
+                    the future, but I don't have the time
+                    rn
+                    -->
+                    <Grid Grid.Row="0"
+                          Height="32"
+                          HorizontalAlignment="Stretch"
+                          Loaded="SegmentedControl_Loaded">
 
-                    <NavigationView x:Name="Column2Navigation"
-                                    Visibility="{Binding HitboxV5Visibility}"
-                                    PaneDisplayMode="Top"
-                                    IsSettingsVisible="False"
-                                    IsBackButtonVisible="Collapsed"
-                                    IsBackEnabled="False"
-                                    SelectionChanged="Column2Navigation_SelectionChanged">
-                        <NavigationView.MenuItems>
-                            <NavigationViewItem  Content="Sprite properties"
-                                                 Tag="PropertiesPage"
-                                                 Margin="0,-4" />
-                            <NavigationViewItem  Content="Hitbox"
-                                                 Tag="HitboxPage"
-                                                 Margin="0,-4" />
-                        </NavigationView.MenuItems>
-                        <Frame x:Name="Column2Frame" />
-                    </NavigationView>
+                        <!--Please ignore the terrible markup-->
+
+                        <Grid x:Name="input"
+                              Canvas.ZIndex="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button Click="SegmentedColumn0_Clicked"
+                                    Grid.Column="0"
+                                    Style="{StaticResource InputButton}" />
+                            <Button Click="SegmentedColumn1_Clicked"
+                                    Grid.Column="1"
+                                    Style="{StaticResource InputButton}" />
+                        </Grid>
+
+                        <Grid x:Name="textPresenter"
+                              Canvas.ZIndex="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Sprite"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Grid.Column="0"/>
+
+                            <TextBlock Text="Hitbox"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Grid.Column="1" />
 
 
+                        </Grid>
+
+                        <Grid x:Name="decorationPresenter">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.ChildrenTransitions>
+                                <RepositionThemeTransition IsStaggeringEnabled="False" />
+                            </Grid.ChildrenTransitions>
+                            <Grid Background="{ThemeResource SegmentedBackground}"
+                                  BorderBrush="{ThemeResource ControlElevationBorderBrush}"
+                                  BorderThickness="1"
+                                  CornerRadius="4"
+                                  Canvas.ZIndex="2"
+                                  Grid.Column="0"
+                                  x:Name="SegmentedSelection">
+                                <Rectangle Width="16"
+                                           Height="3"
+                                           Fill="{ThemeResource AccentFillColorDefaultBrush}"
+                                           RadiusX="2"
+                                           RadiusY="2"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Bottom" />
+                            </Grid>
+                        </Grid>
+
+                        <Grid Background="{ThemeResource ControlAltFillColorSecondaryBrush}"
+                              BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                              BorderThickness="1"
+                              Canvas.ZIndex="1"
+                              CornerRadius="4">
+                        </Grid>
+                    </Grid>
+                    <!---->
+                    <Frame Grid.Row="1"
+                           x:Name="Column2Frame" />
 
                 </Grid>
 
