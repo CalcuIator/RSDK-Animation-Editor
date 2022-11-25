@@ -8,7 +8,7 @@
 
   <Identity
     Name="7c88096c-4876-48a7-9d23-59a15ca8e7fa"
-    Publisher="CN=Jd1ex"
+    Publisher="CN=Jd"
     Version="1.2.3.0" />
 
   <Properties>
@@ -36,7 +36,7 @@
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" />
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"  Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
     </Application>

@@ -27,7 +27,10 @@
 
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
+using System.Diagnostics;
 using System.IO;
+using Windows.Graphics.Imaging;
+using Windows.Storage;
 
 namespace AnimationEditor.Services
 {
@@ -39,31 +42,18 @@ namespace AnimationEditor.Services
     {
         public static BitmapSource Open(string fileName)
         {
+
             if (System.IO.File.Exists(fileName))
             {
-                /*
-                using (var fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                {
-                    BitmapDecoder decoder = await BitmapDecoder.CreateAsync((IRandomAccessStream)fStream);
-                    SoftwareBitmap softwareBitmap = await decoder.GetSoftwareBitmapAsync();
-
-                    var result = softwareBitmap;
-
-                    //return result;
-                }
-                */
-
-
+       
                 using (var fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
                     //Temp :/
                     BitmapImage Image = new BitmapImage();
                     Image.CreateOptions = BitmapCreateOptions.None;
                     Image.UriSource = new Uri(fStream.Name);
-                    var result = Image;
-                    return result;
-                }
-
+                    return Image;
+                }    
             }
             else
             {
@@ -71,8 +61,6 @@ namespace AnimationEditor.Services
             }
             return null;
         }
-
-
 
         public static void Save(this BitmapSource bitmap, string fileName)
         {

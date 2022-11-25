@@ -66,7 +66,6 @@ namespace AnimationEditor.Services
                     var textureBitmap = GetTexture(texture);
                     try
                     {
-
                         //bitmap = new CroppedBitmap(textureBitmap,
                         //new Int32Rect()
                         //{
@@ -93,7 +92,6 @@ namespace AnimationEditor.Services
             _animationData = animation;
             BasePath = basePath;
         }
-
         private BitmapSource GetTexture(int index)
         {
             if (index < 0 || index >= _animationData.SpriteSheets.Count)
@@ -102,7 +100,7 @@ namespace AnimationEditor.Services
             if (_textures.TryGetValue(name, out var bitmap))
                 return bitmap;
             var fileName = Path.Combine(BasePath, name);
-            bitmap = (BitmapSource)ImageService.Open(fileName);
+            bitmap = ImageService.Open(fileName);
             _textures.Add(name, bitmap);
             return bitmap;
         }

@@ -1,17 +1,11 @@
-﻿using Microsoft.UI;
-using Microsoft.UI.Windowing;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media;
-using System;
+﻿using Microsoft.UI.Xaml;
 using System.Runtime.InteropServices;
 using WinRT;
-using WinRT.Interop;
 
 namespace RSDK.AnimationEditor.Views
 {
     public partial class MainWindow : Window
     {
-        private AppWindow m_AppWindow;
         public static MainWindow XamlWindow { get; set; }
         WindowsSystemDispatcherQueueHelper m_wsdqHelper;
         Microsoft.UI.Composition.SystemBackdrops.MicaController m_micaController;
@@ -21,18 +15,7 @@ namespace RSDK.AnimationEditor.Views
         {
             InitializeComponent();
             XamlWindow = this;
-            m_AppWindow = GetAppWindowForCurrentWindow();
-            var titleBar = m_AppWindow.TitleBar;
-            titleBar.ExtendsContentIntoTitleBar = true;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            //ExtendsContentIntoTitleBar = true;
-        }
-        private AppWindow GetAppWindowForCurrentWindow()
-        {
-            IntPtr hWnd = WindowNative.GetWindowHandle(this);
-            WindowId wndId = Win32Interop.GetWindowIdFromWindow(hWnd);
-            return AppWindow.GetFromWindowId(wndId);
+            ExtendsContentIntoTitleBar = true;
         }
         public bool TrySetMicaBackdrop()
         {

@@ -1,11 +1,14 @@
 ﻿using AnimationEditor.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
+using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.IO;
+using System.Security.AccessControl;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
 
@@ -21,19 +24,15 @@ namespace RSDK.AnimationEditor.Views
     {
 
         private MainViewModel ViewModel => (MainViewModel)DataContext;
-        public static Grid MainTitleBar { get; set; }
+        public static Grid MDragRegion { get; set; }
 
         public MainPage()
         {
             InitializeComponent();
-            MainTitleBar = AppTitleBar;
-        }
-
-        private void _Loaded(object sender, RoutedEventArgs e)
-        {
             DataContext = new MainViewModel();
+            MainWindow.XamlWindow.SetTitleBar(AppTitleBar);
+            MDragRegion = AppTitleBar;
             MainWindow.XamlWindow.Activated += _Activated;
-            //MainWindow.XamlWindow.SetTitleBar(AppTitleBar);
             MainWindow.XamlWindow.TrySetMicaBackdrop();
         }
 
@@ -67,9 +66,11 @@ namespace RSDK.AnimationEditor.Views
             var Picker = new FileOpenPicker();
             Picker.FileTypeFilter.Add(".ani");
             Picker.FileTypeFilter.Add(".bin");
-            IntPtr hwnd = WindowNative.GetWindowHandle(MainWindow.XamlWindow);
-            InitializeWithWindow.Initialize(Picker, hwnd);
-
+            await Task.Run(() =>
+            {
+                IntPtr hwnd = WindowNative.GetWindowHandle(MainWindow.XamlWindow);
+                InitializeWithWindow.Initialize(Picker, hwnd);
+            });
             Windows.Storage.StorageFile File = await Picker.PickSingleFileAsync();
 
             if (File != null)
@@ -140,41 +141,30 @@ namespace RSDK.AnimationEditor.Views
             }
             else if (ViewModel.IsHitboxV5)
             {
-                //new HitboxManagerV5(ViewModel).Activate();
+                new HitboxManagerV5(ViewModel).Activate();
             }
         }
 
-        private async void ViewTexture_Click(object sender, RoutedEventArgs e)
+        private void ViewTexture_Click(object sender, RoutedEventArgs e)
         {
             if (ViewModel.IsAnimationDataLoaded)
             {
                 var basePath = Path.Combine(Path.GetDirectoryName(ViewModel.FileName), ViewModel.PathMod);
-                var content = new TextureManager(ViewModel, basePath);
-
-                ContentDialog Dialog = new ContentDialog();
-
-                Dialog.XamlRoot = XamlRoot;
-
-                Dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-                Dialog.Title = "Something went wrong";
-                Dialog.Content = content;
-
-                Dialog.CloseButtonText = "*";
-
-
-                var result = await Dialog.ShowAsync();
-                if (result == ContentDialogResult.Primary)
-                {
-                    //UnloadObject(Dialog);
-                }
-
-                //Window.Activate();
+                new TextureManager(ViewModel, basePath).Activate();
             }
         }
 
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Settings));
+            if (Frame.CanGoForward)
+            {
+                Frame.GoForward();
+            }
+            else
+            {
+                Frame.Navigate(typeof(Settings));
+            }
+            MainWindow.XamlWindow.SetTitleBar(Settings.SDragRegion);
         }
 
         #endregion
@@ -253,21 +243,36 @@ namespace RSDK.AnimationEditor.Views
 
         #endregion
 
-        private void SegmentedControl_Loaded(object sender, RoutedEventArgs e)
+        private void Column2Nav_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            Column2Frame.Navigate(typeof(SpritePropertiesContent));
+            if (args.SelectedItem == SpriteTab)
+            {
+                Col2ContentFrame.Navigate(typeof(SpritePropertiesContent));
+            }
+            else if (args.SelectedItem == HitboxTab)
+            {
+                Col2ContentFrame.Navigate(typeof(HitboxContent));
+            }
         }
-        private async void SegmentedColumn0_Clicked(object sender, RoutedEventArgs e)
+
+        private void Column2Frame_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Column2Frame.Content == null)
+            {
+                Column2Frame.Navigate(typeof(SpritePropertiesContent));
+            }
+        }
+
+
+        private void SegmentedColumn0_Clicked(object sender, RoutedEventArgs e)
         {
             Grid.SetColumn(SegmentedSelection, 0);
-            await Task.Delay(10);
             Column2Frame.Navigate(typeof(SpritePropertiesContent));
         }
 
-        private async void SegmentedColumn1_Clicked(object sender, RoutedEventArgs e)
+        private void SegmentedColumn1_Clicked(object sender, RoutedEventArgs e)
         {
             Grid.SetColumn(SegmentedSelection, 1);
-            await Task.Delay(10);
             Column2Frame.Navigate(typeof(HitboxContent));
         }
     }

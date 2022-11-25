@@ -134,8 +134,7 @@ namespace AnimationEditor.Services
                 if (_frameIndex != value)
                 {
                     _frameIndex = value;
-                    _currentFrame = CurrentAnimation?.GetFrames()
-                        .Skip(_frameIndex).FirstOrDefault();
+                    _currentFrame = CurrentAnimation?.GetFrames().Skip(_frameIndex).FirstOrDefault();
                     OnFrameChanged?.Invoke(this);
                 }
             }

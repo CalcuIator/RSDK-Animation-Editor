@@ -8,7 +8,6 @@
       xmlns:Toolkit="using:CommunityToolkit.WinUI.UI.Controls"
       mc:Ignorable="d"
       UseLayoutRounding="True"
-      Loaded="_Loaded"
       NavigationCacheMode="Required">
 
     <Grid>
@@ -108,21 +107,6 @@
                         </MenuFlyoutItem>
                     </MenuBarItem>
                     <MenuBarItem Title="View">
-                        <MenuFlyoutSubItem Text="Zoom"
-                                           IsEnabled="{Binding IsAnimationDataLoaded}">
-                            <MenuFlyoutSubItem.Icon>
-                                <FontIcon Glyph="&#xe71e;" />
-                            </MenuFlyoutSubItem.Icon>
-                            <MenuFlyoutItem Text="Zoom in" />
-                            <MenuFlyoutItem Text="Zoom out" />
-                            <MenuFlyoutItem Text="Restore default zoom"
-                                            x:Name="ZoomRestore">
-                                <MenuFlyoutItem.KeyboardAccelerators>
-                                    <KeyboardAccelerator Modifiers="Control" />
-                                </MenuFlyoutItem.KeyboardAccelerators>
-                            </MenuFlyoutItem>
-                        </MenuFlyoutSubItem>
-                        <MenuFlyoutSeparator />
                         <MenuFlyoutItem Text="Hitbox manager"
                                         IsEnabled="{Binding IsAnimationDataLoaded}"
                                         Click="ViewHitbox_Click">
@@ -245,32 +229,46 @@
                         <ThemeShadow />
                     </Border.Shadow>
 
-                    <Canvas Background="Transparent">
-                        <Image Source="{Binding Sprite}"
-                               Canvas.Left="{Binding SpriteLeft, Mode=OneWay}"
-                               Canvas.Top="{Binding SpriteTop, Mode=OneWay}"
-                               RenderTransformOrigin="{Binding SpriteCenter, Mode=OneWay}">
-                            <Image.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform ScaleX="{Binding SpriteScaleX}"
-                                                    ScaleY="{Binding SpriteScaleY}" />
-                                    <SkewTransform />
-                                    <RotateTransform />
-                                    <TranslateTransform />
-                                </TransformGroup>
-                            </Image.RenderTransform>
-                        </Image>
-                    </Canvas>
+                    <Grid>
+
+                        <TextBlock Foreground="{ThemeResource DescriptiveValue}"
+                                   Margin="8,4"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Top"
+                                   RequestedTheme="Dark">
+                                <Run Text="Frame " />
+                                <Run Text="{Binding SelectedFrameIndex, Mode=OneWay}" />
+                                <Run Text="-" />
+                                <Run Text="{Binding FramesCount, Mode=OneWay}" />
+                        </TextBlock>
+
+                        <Canvas Background="Transparent">
+                            <Image Source="{Binding Sprite}"
+                                   Canvas.Left="{Binding SpriteLeft, Mode=OneWay}"
+                                   Canvas.Top="{Binding SpriteTop, Mode=OneWay}"
+                                   RenderTransformOrigin="{Binding SpriteCenter, Mode=OneWay}">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="{Binding SpriteScaleX}"
+                                                        ScaleY="{Binding SpriteScaleY}" />
+                                        <SkewTransform />
+                                        <RotateTransform />
+                                        <TranslateTransform />
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                        </Canvas>
+
+                    </Grid>
 
                 </Border>
 
-                <Border Background="{ThemeResource LayerFillColorDefaultBrush}"
-                        BackgroundSizing="OuterBorderEdge"
+                <Border Background="{ThemeResource DockBackground}"
                         BorderBrush="{ThemeResource ControlElevationBorderBrush}"
                         BorderThickness="1"
                         CornerRadius="8"
                         Grid.Row="1"
-                        Translation="0,0,4">
+                        Translation="0,0,2">
 
                     <Border.Shadow>
                         <ThemeShadow />
@@ -299,13 +297,12 @@
 
                 </Border>
 
-                <Border Background="{ThemeResource LayerFillColorDefaultBrush}"
-                        BackgroundSizing="OuterBorderEdge"
+                <Border Background="{ThemeResource DockBackground}"
                         BorderBrush="{ThemeResource ControlElevationBorderBrush}"
                         BorderThickness="1"
                         CornerRadius="8"
                         Grid.Row="2"
-                        Translation="0,0,4">
+                        Translation="0,0,2">
 
                     <Border.Shadow>
                         <ThemeShadow />
@@ -329,11 +326,11 @@
                                     <Setter Property="FontSize"
                                             Value="16" />
                                     <Setter Property="Height"
-                                            Value="30" />
+                                            Value="28" />
                                     <Setter Property="Padding"
                                             Value="0" />
                                     <Setter Property="Width"
-                                            Value="30" />
+                                            Value="28" />
 
                                 </Style>
 
@@ -344,11 +341,11 @@
                                     <Setter Property="FontSize"
                                             Value="16" />
                                     <Setter Property="Height"
-                                            Value="30" />
+                                            Value="28" />
                                     <Setter Property="Padding"
                                             Value="0" />
                                     <Setter Property="Width"
-                                            Value="30" />
+                                            Value="28" />
                                 </Style>
                             </ResourceDictionary>
                         </Toolkit:WrapPanel.Resources>
@@ -362,8 +359,6 @@
 
                         <Button Content="&#xe71f;" />
 
-                        <Button Content="&#xe71e;" />
-
                         <AppBarSeparator />
 
                         <Button Content="&#xe710;" />
@@ -376,22 +371,17 @@
 
                         <Button Content="&#xede1;" />
 
-                        <AppBarSeparator x:Load="False"
-                                         x:Name="a" />
+                        <AppBarSeparator />
 
                         <Button Content="&#xe76b;"
                                 FontSize="16"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Padding="0"
-                                x:Load="False"
-                                x:Name="b" />
+                                Padding="0" />
 
                         <Button Content="&#xe76c;"
                                 FontSize="16"
                                 FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                Padding="0"
-                                x:Load="False"
-                                x:Name="c" />
+                                Padding="0" />
 
                     </Toolkit:WrapPanel>
                 </Border>
@@ -437,8 +427,6 @@
 
                 </Grid>
 
-
-
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -451,10 +439,25 @@
                     the future, but I don't have the time
                     rn
                     -->
+
+                    <NavigationView IsBackButtonVisible="Collapsed"
+                                    IsSettingsVisible="False"
+                                    PaneDisplayMode="Top"
+                                    x:Name="nav"
+                                    x:Load="False"
+                                    SelectionChanged="Column2Nav_SelectionChanged">
+                        <NavigationView.MenuItems>
+                            <NavigationViewItem Content="Sprite"
+                                                x:Name="SpriteTab" />
+                            <NavigationViewItem Content="Hitbox"
+                                                x:Name="HitboxTab" />
+                        </NavigationView.MenuItems>
+                        <Frame x:Name="Col2ContentFrame" />
+                    </NavigationView>
+
                     <Grid Grid.Row="0"
                           Height="32"
-                          HorizontalAlignment="Stretch"
-                          Loaded="SegmentedControl_Loaded">
+                          HorizontalAlignment="Stretch">
 
                         <!--Please ignore the terrible markup-->
 
@@ -482,7 +485,7 @@
                             <TextBlock Text="Sprite"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
-                                       Grid.Column="0"/>
+                                       Grid.Column="0" />
 
                             <TextBlock Text="Hitbox"
                                        VerticalAlignment="Center"
@@ -492,7 +495,8 @@
 
                         </Grid>
 
-                        <Grid x:Name="decorationPresenter">
+                        <Grid Canvas.ZIndex="2"
+                              x:Name="decorationPresenter">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
@@ -504,7 +508,6 @@
                                   BorderBrush="{ThemeResource ControlElevationBorderBrush}"
                                   BorderThickness="1"
                                   CornerRadius="4"
-                                  Canvas.ZIndex="2"
                                   Grid.Column="0"
                                   x:Name="SegmentedSelection">
                                 <Rectangle Width="16"
@@ -526,8 +529,8 @@
                     </Grid>
                     <!---->
                     <Frame Grid.Row="1"
-                           x:Name="Column2Frame" />
-
+                           Loaded="Column2Frame_Loaded"
+                           x:Name="Column2Frame"/>
                 </Grid>
 
                 <Grid Grid.Row="2">

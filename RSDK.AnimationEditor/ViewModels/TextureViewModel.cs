@@ -39,7 +39,7 @@ namespace AnimationEditor.ViewModels
                 }
                 OnPropertyChanged(nameof(Image));
                 OnPropertyChanged(nameof(StrSize));
-                OnPropertyChanged(nameof(StrFormat));
+                //OnPropertyChanged(nameof(StrFormat));
             }
         }
 

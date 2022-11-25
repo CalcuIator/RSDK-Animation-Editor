@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Animation;
 using Windows.ApplicationModel;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -12,11 +13,11 @@ namespace RSDK.AnimationEditor.Views
     /// </summary>
     public sealed partial class Settings : Page
     {
+        public static Grid SDragRegion { get; set; }
         public Settings()
         {
             InitializeComponent();
-            //MainWindow.XamlWindow.SetTitleBar(DragRegion);
-
+            SDragRegion = DragRegion;
             var Version = Package.Current.Id.Version;
             AppString.Text = $"RSDK Animation Editor {string.Format("{0}.{1}.{2}", Version.Major, Version.Minor, Version.Build)}";
         }
@@ -71,12 +72,15 @@ namespace RSDK.AnimationEditor.Views
 
         private void Back_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            Frame.GoBack();
-            //Page is cached, title bar has to be set again
-            MainWindow.XamlWindow.SetTitleBar(MainPage.MainTitleBar);
-            UnloadObject(this);
+            if (Frame.CanGoBack)
+            {
+                Frame.GoBack();
+            }
+            else
+            {
+                Frame.Navigate(typeof(MainPage), null, new DrillInNavigationTransitionInfo());
+            }
+            MainWindow.XamlWindow.SetTitleBar(MainPage.MDragRegion);
         }
-
-
     }
 }
