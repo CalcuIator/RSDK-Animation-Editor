@@ -32,6 +32,9 @@
             <SolidColorBrush x:Key="DescriptiveValue"
                              Color="#9E000000" />
 
+            <SolidColorBrush x:Key="PlaceholderBackdrop"
+                             Color="#F3F3F3" />
+
             <SolidColorBrush x:Key="MenubarStroke"
                              Color="#000000"
                              Opacity="0.0578" />
@@ -63,7 +66,8 @@
             <SolidColorBrush x:Key="DescriptiveValue"
                              Color="#C5FFFFFF" />
 
-
+            <SolidColorBrush x:Key="PlaceholderBackdrop"
+                             Color="#202020" />
 
             <SolidColorBrush x:Key="MenubarStroke"
                              Color="#000000"

@@ -6,15 +6,13 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:AnimatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
       xmlns:Toolkit="using:CommunityToolkit.WinUI.UI.Controls"
-      mc:Ignorable="d"
-      UseLayoutRounding="True"
-      NavigationCacheMode="Required">
+      mc:Ignorable="d">
 
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="32" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -50,7 +48,8 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0"
+            <StackPanel x:Name="MenuStack"
+                        Grid.Column="0"
                         Orientation="Horizontal">
                 <MenuBar FontFamily="Segoe UI">
                     <MenuBarItem Title="File">
@@ -530,7 +529,7 @@
                     <!---->
                     <Frame Grid.Row="1"
                            Loaded="Column2Frame_Loaded"
-                           x:Name="Column2Frame"/>
+                           x:Name="Column2Frame" />
                 </Grid>
 
                 <Grid Grid.Row="2">

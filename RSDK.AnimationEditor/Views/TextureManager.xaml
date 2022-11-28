@@ -113,10 +113,26 @@
                                     Margin="0">
                                 <Button.Flyout>
                                     <MenuFlyout>
-                                        <MenuFlyoutItem Text="Delete"
-                                                        Click="Delete_Click" />
                                         <MenuFlyoutItem Text="Remove"
-                                                        Click="Remove_Click" />
+                                                        Click="Remove_Click">
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xe738;" />
+                                            </MenuFlyoutItem.Icon>
+                                            <MenuFlyoutItem.KeyboardAccelerators>
+                                                <KeyboardAccelerator Modifiers="Control"
+                                                                     Key="R" />
+                                            </MenuFlyoutItem.KeyboardAccelerators>
+                                        </MenuFlyoutItem>
+                                        <MenuFlyoutSeparator />
+                                        <MenuFlyoutItem Text="Delete"
+                                                        Click="Delete_Click">
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xe74d;" />
+                                            </MenuFlyoutItem.Icon>
+                                            <MenuFlyoutItem.KeyboardAccelerators>
+                                                <KeyboardAccelerator Key="Delete" />
+                                            </MenuFlyoutItem.KeyboardAccelerators>
+                                        </MenuFlyoutItem>
                                     </MenuFlyout>
                                 </Button.Flyout>
                             </Button>

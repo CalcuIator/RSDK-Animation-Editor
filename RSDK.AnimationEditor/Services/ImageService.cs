@@ -27,10 +27,7 @@
 
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
-using System.Diagnostics;
 using System.IO;
-using Windows.Graphics.Imaging;
-using Windows.Storage;
 
 namespace AnimationEditor.Services
 {
@@ -45,7 +42,7 @@ namespace AnimationEditor.Services
 
             if (System.IO.File.Exists(fileName))
             {
-       
+
                 using (var fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
                     //Temp :/
@@ -53,7 +50,7 @@ namespace AnimationEditor.Services
                     Image.CreateOptions = BitmapCreateOptions.None;
                     Image.UriSource = new Uri(fStream.Name);
                     return Image;
-                }    
+                }
             }
             else
             {
