@@ -19,18 +19,25 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Never</AppxBundle>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+    <ApplicationIcon>Assets\SmallIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Resources\OverwriteStyles.xaml" />
-    <None Remove="Resources\Styles.xaml" />
-    <None Remove="Views\HitboxContent.xaml" />
-    <None Remove="Views\HitboxManagerV5.xaml" />
-    <None Remove="Views\HitboxManagerVX.xaml" />
-    <None Remove="Views\MainPage.xaml" />
-    <None Remove="Views\MainWindow.xaml" />
-    <None Remove="Views\Settings.xaml" />
-    <None Remove="Views\SpritePropertiesContent.xaml" />
-    <None Remove="Views\TextureManager.xaml" />
+    <Content Remove="Assets\Library.svg" />
+    <Content Remove="Assets\LibraryDark.png" />
+    <Content Remove="Assets\LibraryLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Content\Resources\OverwriteStyles.xaml" />
+    <None Remove="Content\Resources\Styles.xaml" />
+    <None Remove="Content\Views\HitboxContent.xaml" />
+    <None Remove="Content\Views\HitboxManagerV5.xaml" />
+    <None Remove="Content\Views\HitboxManagerVX.xaml" />
+    <None Remove="Content\Views\MainPage.xaml" />
+    <None Remove="Content\Views\MainWindow.xaml" />
+    <None Remove="Content\Views\Other\RenameDialog.xaml" />
+    <None Remove="Content\Views\Settings.xaml" />
+    <None Remove="Content\Views\SpritePropertiesContent.xaml" />
+    <None Remove="Content\Views\TextureManager.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,6 +54,7 @@
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221109.1" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
+    <PackageReference Include="WinUIEx" Version="1.8.0" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -65,37 +73,59 @@
     <ProjectReference Include="..\Xe.Tools.Wpf\Xe.Tools.Wpf.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="Assets\Library.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\LibraryDark.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\LibraryLight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\SmallIcon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Page Update="Views\HitboxManagerV5.xaml">
+    <Page Update="Content\Views\Other\RenameDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Resources\Styles.xaml">
+    <Page Update="Content\Views\HitboxContent.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Resources\OverwriteStyles.xaml">
+    <Page Update="Content\Views\HitboxManagerV5.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\HitboxContent.xaml">
+    <Page Update="Content\Views\HitboxManagerVX.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\SpritePropertiesContent.xaml">
+    <Page Update="Content\Views\MainPage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\MainWindow.xaml">
+    <Page Update="Content\Views\MainWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\MainPage.xaml">
+    <Page Update="Content\Views\Settings.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\Settings.xaml">
+    <Page Update="Content\Views\SpritePropertiesContent.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Views\TextureManager.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\HitboxManagerVX.xaml">
+    <Page Update="Content\Views\TextureManager.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
