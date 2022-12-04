@@ -1,6 +1,5 @@
 # RSDK Animation Editor
 Fork of xeeynamo's RSDK Animation Editor with just a tiny bit of updates
-yep
 
 ![Screenshot (519)](https://user-images.githubusercontent.com/104047615/205516740-b7d31937-ac7d-4e1c-83d5-c0e05e012e87.png)
 
