@@ -1,6 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
+using RSDK.AnimationEditor.Content.Views.Other;
 using Windows.ApplicationModel;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -80,7 +81,26 @@ namespace RSDK.AnimationEditor.Content.Views
             {
                 Frame.Navigate(typeof(MainPage), null, new DrillInNavigationTransitionInfo());
             }
-            //MainWindow.XamlWindow.DispatcherQueue.TryEnqueue(() => MainWindow.XamlWindow.SetTitleBar(MainPage.MDragRegion));
+            MainWindow.XamlWindow.DispatcherQueue.TryEnqueue(() => MainWindow.XamlWindow.SetTitleBar(MainPage.MDragRegion));
+        }
+
+        private void Theme_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is RadioButton radio)
+            {
+                string tag = radio.Tag as string;
+                switch (tag)
+                {
+                    case "1":
+                        App.Current.RequestedTheme = ApplicationTheme.Light;
+                        break;
+                    case "2":
+                        App.Current.RequestedTheme = ApplicationTheme.Dark;
+                        break;
+                    case "3":
+                        break;
+                }
+            }
         }
     }
 }

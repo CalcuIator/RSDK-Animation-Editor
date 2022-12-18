@@ -51,6 +51,55 @@ namespace RSDK.AnimationEditor.Content.Views
 
         private async void FileOpen_Click(object sender, RoutedEventArgs e)
         {
+            var Picker = new FileOpenPicker();
+            Picker.FileTypeFilter.Add(".ani");
+            Picker.FileTypeFilter.Add(".bin");
+            IntPtr hwnd = WindowNative.GetWindowHandle(MainWindow.XamlWindow);
+            InitializeWithWindow.Initialize(Picker, hwnd);
+
+            Windows.Storage.StorageFile File = await Picker.PickSingleFileAsync();
+
+            if (File != null)
+            {
+                try
+                {
+                    await ViewModel.FileOpen(File.Path);
+                    MainWindow.XamlWindow.Title = AppTitleTextBlock.Text;
+
+                    if (!hasLoaded)
+                    {
+                        Parallel.Invoke(() =>
+                        {
+                            FindName("Column0");
+                            FindName("Column1");
+                            FindName("Column2");
+                            hasLoaded = true;
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ContentDialog Dialog = new ContentDialog
+                    {
+                        XamlRoot = XamlRoot,
+                        Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                        Title = "Something went wrong",
+                        Content = "There was a problem loading this file. " + ex.Message,
+                        PrimaryButtonText = "Close"
+                    };
+                    var result = await Dialog.ShowAsync();
+                    if (result == ContentDialogResult.Primary)
+                    {
+                        OpenFromDialog();
+                    }
+                };
+            }
+        }
+
+        /*
+
+        private async void FileOpen_Click(object sender, RoutedEventArgs e)
+        {
 
             //var fd = Xe.Tools.Wpf.Dialogs.FileDialog.Factory(this,
             //    Xe.Tools.Wpf.Dialogs.FileDialog.Behavior.Open,
@@ -77,20 +126,21 @@ namespace RSDK.AnimationEditor.Content.Views
 
                     /*Title has to be updated from C# since
                     Window doesn't have a DataContext property*/
+        /*
 
                     MainWindow.XamlWindow.Title = AppTitleTextBlock.Text;
 
                     if (hasLoaded == false)
                     {
-                        DispatcherQueue.TryEnqueue(async () =>
-                        {
-                            await Task.Delay(16);
-                            FindName("Column0");
-                            await Task.Delay(16);
-                            FindName("Column1");
-                            await Task.Delay(16);
-                            FindName("Column2");
-                        });
+                        //DispatcherQueue.TryEnqueue(async () =>
+                        //{
+                        //    await Task.Delay(16);
+                        FindName("Column0");
+                        //    await Task.Delay(16);
+                        FindName("Column1");
+                        //    await Task.Delay(16);
+                        FindName("Column2");
+                        //});
                         hasLoaded = true;
                     }
                 }
@@ -116,6 +166,8 @@ namespace RSDK.AnimationEditor.Content.Views
                 //No file selected, do nothing
             }
         }
+
+        */
 
         private void FileSave_Click(object sender, RoutedEventArgs e)
         {
@@ -149,7 +201,7 @@ namespace RSDK.AnimationEditor.Content.Views
             }
         }
 
-        private async void ViewTexture_Click(object sender, RoutedEventArgs e)
+        private void ViewTexture_Click(object sender, RoutedEventArgs e)
         {
             if (ViewModel.IsAnimationDataLoaded)
             {
@@ -183,16 +235,18 @@ namespace RSDK.AnimationEditor.Content.Views
             }
         }
 
-        private void SegmentedColumn0_Clicked(object sender, RoutedEventArgs e)
+        private async void SegmentedColumn0_Clicked(object sender, RoutedEventArgs e)
         {
-            Grid.SetColumn(SegmentedSelection, 0);
             Column2Frame.Navigate(typeof(SpritePropertiesContent));
+            await Task.Delay(10);
+            DispatcherQueue.TryEnqueue(() => Grid.SetColumn(SegmentedSelection, 0));
         }
 
-        private void SegmentedColumn1_Clicked(object sender, RoutedEventArgs e)
+        private async void SegmentedColumn1_Clicked(object sender, RoutedEventArgs e)
         {
-            Grid.SetColumn(SegmentedSelection, 1);
             Column2Frame.Navigate(typeof(HitboxContent));
+            await Task.Delay(10);
+            DispatcherQueue.TryEnqueue(() => Grid.SetColumn(SegmentedSelection, 1));
         }
 
         #endregion
@@ -220,7 +274,7 @@ namespace RSDK.AnimationEditor.Content.Views
                 try
                 {
                     //Load file
-                    ViewModel.FileOpen(File.Path);
+                    await ViewModel.FileOpen(File.Path);
                 }
                 catch (Exception ex)
                 {
@@ -235,7 +289,6 @@ namespace RSDK.AnimationEditor.Content.Views
                     if (result == ContentDialogResult.Primary)
                     {
                         OpenFromDialog();
-                        UnloadObject(Dialog);
                     }
                 };
             }
@@ -248,7 +301,7 @@ namespace RSDK.AnimationEditor.Content.Views
                     on the file dialog, wait for
                     them to open a file
                     */
-                    ViewModel.FileOpen(File.Path);
+                    await ViewModel.FileOpen(File.Path);
                 }
                 catch (Exception ex)
                 {
@@ -263,7 +316,6 @@ namespace RSDK.AnimationEditor.Content.Views
                     if (result == ContentDialogResult.Primary)
                     {
                         OpenFromDialog();
-                        UnloadObject(Dialog);
                     }
                 };
             }
@@ -278,7 +330,7 @@ namespace RSDK.AnimationEditor.Content.Views
             {
                 Position = e.GetPosition((FrameworkElement)sender),
                 ShowMode = FlyoutShowMode.Standard,
-                Placement= FlyoutPlacementMode.BottomEdgeAlignedLeft
+                Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft
             };
 
             AnimationListContextMenu.ShowAt((FrameworkElement)sender, options);

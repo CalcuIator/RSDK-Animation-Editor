@@ -27,7 +27,9 @@
 
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace RSDK.AnimationEditor.Content.Services
 {
@@ -37,20 +39,26 @@ namespace RSDK.AnimationEditor.Content.Services
     }
     public static class ImageService
     {
+
         public static BitmapSource Open(string fileName)
         {
-
             if (File.Exists(fileName))
             {
+                if (ImageCache.ContainsKey(fileName))
+                    return ImageCache[fileName];
 
-                using (var fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                BitmapImage Image = null;
+                Parallel.Invoke(() =>
                 {
-                    //Temp :/
-                    BitmapImage Image = new BitmapImage();
-                    Image.CreateOptions = BitmapCreateOptions.None;
-                    Image.UriSource = new Uri(fStream.Name);
-                    return Image;
-                }
+                    using (var fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    {
+                        Image = new BitmapImage();
+                        Image.UriSource = new Uri(fStream.Name);
+                    }
+                });
+
+                ImageCache.Add(fileName, Image);
+                return Image;
             }
             else
             {
@@ -58,6 +66,9 @@ namespace RSDK.AnimationEditor.Content.Services
             }
             return null;
         }
+
+        //Cache dictionary
+        private static Dictionary<string, BitmapSource> ImageCache = new Dictionary<string, BitmapSource>();
 
         public static void Save(this BitmapSource bitmap, string fileName)
         {

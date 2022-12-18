@@ -1,11 +1,6 @@
-﻿using Microsoft.UI;
-using Microsoft.UI.Windowing;
+﻿using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
-using System;
-using System.Runtime.InteropServices;
-using Windows.UI;
 using WinRT;
-using WinRT.Interop;
 
 namespace RSDK.AnimationEditor.Content.Views.Other
 {
@@ -13,29 +8,25 @@ namespace RSDK.AnimationEditor.Content.Views.Other
     {
         public static MainWindow XamlWindow { get; set; }
         WindowsSystemDispatcherQueueHelper m_wsdqHelper;
-        Microsoft.UI.Composition.SystemBackdrops.MicaController m_micaController;
-        Microsoft.UI.Composition.SystemBackdrops.SystemBackdropConfiguration m_configurationSource;
-        public AppWindow appWindow;
+        MicaController m_micaController;
+        SystemBackdropConfiguration m_configurationSource;
 
         public MainWindow()
         {
             InitializeComponent();
-            appWindow = GetAppWindowForCurrentWindow();
+            TrySetMicaBackdrop();
             XamlWindow = this;
 
             var manager = WinUIEx.WindowManager.Get(this);
+            manager.PersistenceId = "MWPersistance";
             manager.MinWidth = 500;
             manager.MinHeight = 350;
-            manager.PersistenceId = "MWPersistance";
 
-            appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-            appWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
-            appWindow.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            UpdateCaptionColors();
+            ExtendsContentIntoTitleBar = true;
         }
 
-        //Windowing
 
+        /*
         private void UpdateCaptionColors()
         {
             var isThemeDark = Application.Current.RequestedTheme == ApplicationTheme.Dark;
@@ -43,6 +34,7 @@ namespace RSDK.AnimationEditor.Content.Views.Other
             appWindow.TitleBar.ButtonHoverBackgroundColor = isThemeDark ? Color.FromArgb(15, 255, 255, 255) : Color.FromArgb(10, 0, 0, 0);
             appWindow.TitleBar.ButtonPressedBackgroundColor = isThemeDark ? Color.FromArgb(10, 255, 255, 255) : Color.FromArgb(6, 0, 0, 0);
         }
+        */
 
         private void Window_ThemeChanged(FrameworkElement sender, object args)
         {
@@ -50,14 +42,7 @@ namespace RSDK.AnimationEditor.Content.Views.Other
             {
                 SetConfigurationSourceTheme();
             }
-            UpdateCaptionColors();
-        }
-
-        public AppWindow GetAppWindowForCurrentWindow()
-        {
-            IntPtr hWnd = WindowNative.GetWindowHandle(this);
-            Microsoft.UI.WindowId wndId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
-            return AppWindow.GetFromWindowId(wndId);
+            //UpdateCaptionColors();
         }
         public bool TrySetMicaBackdrop()
         {
@@ -113,40 +98,6 @@ namespace RSDK.AnimationEditor.Content.Views.Other
                 case ElementTheme.Dark: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Dark; break;
                 case ElementTheme.Light: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Light; break;
                 case ElementTheme.Default: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Default; break;
-            }
-        }
-
-        class WindowsSystemDispatcherQueueHelper
-        {
-            [StructLayout(LayoutKind.Sequential)]
-            struct DispatcherQueueOptions
-            {
-                internal int dwSize;
-                internal int threadType;
-                internal int apartmentType;
-            }
-
-            [DllImport("CoreMessaging.dll")]
-            private static extern int CreateDispatcherQueueController([In] DispatcherQueueOptions options, [In, Out, MarshalAs(UnmanagedType.IUnknown)] ref object dispatcherQueueController);
-
-            object m_dispatcherQueueController = null;
-            public void EnsureWindowsSystemDispatcherQueueController()
-            {
-                if (Windows.System.DispatcherQueue.GetForCurrentThread() != null)
-                {
-                    // one already exists, so we'll just use it.
-                    return;
-                }
-
-                if (m_dispatcherQueueController == null)
-                {
-                    DispatcherQueueOptions options;
-                    options.dwSize = Marshal.SizeOf(typeof(DispatcherQueueOptions));
-                    options.threadType = 2;    // DQTYPE_THREAD_CURRENT
-                    options.apartmentType = 2; // DQTAT_COM_STA
-
-                    CreateDispatcherQueueController(options, ref m_dispatcherQueueController);
-                }
             }
         }
 

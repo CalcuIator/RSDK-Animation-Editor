@@ -1,11 +1,15 @@
-﻿<Window x:Class="RSDK.AnimationEditor.Content.Views.TextureManager"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="using:RSDK.AnimationEditor.Content.Views"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Toolkit="using:CommunityToolkit.WinUI.UI.Controls"
-        mc:Ignorable="d">
+﻿<WinUIEx:WindowEx x:Class="RSDK.AnimationEditor.Content.Views.TextureManager"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:local="using:RSDK.AnimationEditor.Content.Views"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:Toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+                  xmlns:WinUIEx="using:WinUIEx"
+                  mc:Ignorable="d"
+                  Title="Texture Manager"
+                  Width="784"
+                  Height="554">
 
     <Grid UseLayoutRounding="True"
           x:Name="rootGrid">
@@ -32,7 +36,7 @@
                            Grid.Column="1"
                            Width="16"
                            Height="16" />
-                    <TextBlock Text="Texture Manager"
+                    <TextBlock Text="{x:Bind Title}"
                                Style="{StaticResource CaptionTextBlockStyle}"
                                Grid.Column="3" />
                 </Grid>
@@ -163,7 +167,7 @@
                         Grid.Column="1"
                         Padding="12">
                     <Image Source="{x:Bind ViewModel.CurrentTexture.Image, Mode=TwoWay}"
-                           Translation="0,0,12">
+                           Translation="0,0,16">
                         <Image.Shadow>
                             <ThemeShadow />
                         </Image.Shadow>
@@ -172,4 +176,4 @@
             </Grid>
         </Grid>
     </Grid>
-</Window>
+</WinUIEx:WindowEx>

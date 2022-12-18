@@ -1,9 +1,9 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Composition.SystemBackdrops;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using RSDK.AnimationEditor.Content.ViewModels;
 using System;
 using System.IO;
-using System.Runtime.InteropServices;
 using Windows.Storage.Pickers;
 using WinRT;
 using WinRT.Interop;
@@ -16,14 +16,15 @@ namespace RSDK.AnimationEditor.Content.Views
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class TextureManager : Window
+    public sealed partial class TextureManager : WinUIEx.WindowEx
     {
         public string BasePath { get; private set; }
         public TextureWindowViewModel ViewModel => rootGrid.DataContext as TextureWindowViewModel;
         public MainViewModel MainViewModel { get; }
+
         WindowsSystemDispatcherQueueHelper m_wsdqHelper;
-        Microsoft.UI.Composition.SystemBackdrops.MicaController m_micaController;
-        Microsoft.UI.Composition.SystemBackdrops.SystemBackdropConfiguration m_configurationSource;
+        MicaController m_micaController;
+        SystemBackdropConfiguration m_configurationSource;
 
         public int SelectedIndex
         {
@@ -48,6 +49,7 @@ namespace RSDK.AnimationEditor.Content.Views
             SetTitleBar(AppTitleBar);
             TrySetMicaBackdrop();
         }
+
 
         #region Functionality
         private async void Add_Click(object sender, RoutedEventArgs e)
@@ -158,6 +160,7 @@ namespace RSDK.AnimationEditor.Content.Views
         #endregion
 
         #region
+
         public bool TrySetMicaBackdrop()
         {
             if (Microsoft.UI.Composition.SystemBackdrops.MicaController.IsSupported())
@@ -211,7 +214,6 @@ namespace RSDK.AnimationEditor.Content.Views
             {
                 SetConfigurationSourceTheme();
             }
-
         }
         private void SetConfigurationSourceTheme()
         {
@@ -223,39 +225,6 @@ namespace RSDK.AnimationEditor.Content.Views
             }
         }
 
-        class WindowsSystemDispatcherQueueHelper
-        {
-            [StructLayout(LayoutKind.Sequential)]
-            struct DispatcherQueueOptions
-            {
-                internal int dwSize;
-                internal int threadType;
-                internal int apartmentType;
-            }
-
-            [DllImport("CoreMessaging.dll")]
-            private static extern int CreateDispatcherQueueController([In] DispatcherQueueOptions options, [In, Out, MarshalAs(UnmanagedType.IUnknown)] ref object dispatcherQueueController);
-
-            object m_dispatcherQueueController = null;
-            public void EnsureWindowsSystemDispatcherQueueController()
-            {
-                if (Windows.System.DispatcherQueue.GetForCurrentThread() != null)
-                {
-                    // one already exists, so we'll just use it.
-                    return;
-                }
-
-                if (m_dispatcherQueueController == null)
-                {
-                    DispatcherQueueOptions options;
-                    options.dwSize = Marshal.SizeOf(typeof(DispatcherQueueOptions));
-                    options.threadType = 2;    // DQTYPE_THREAD_CURRENT
-                    options.apartmentType = 2; // DQTAT_COM_STA
-
-                    CreateDispatcherQueueController(options, ref m_dispatcherQueueController);
-                }
-            }
-        }
         #endregion
 
 

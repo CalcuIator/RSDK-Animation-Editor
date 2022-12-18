@@ -22,11 +22,6 @@
     <ApplicationIcon>Assets\SmallIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="Assets\Library.svg" />
-    <Content Remove="Assets\LibraryDark.png" />
-    <Content Remove="Assets\LibraryLight.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="Content\Resources\OverwriteStyles.xaml" />
     <None Remove="Content\Resources\Styles.xaml" />
     <None Remove="Content\Views\HitboxContent.xaml" />
@@ -73,15 +68,6 @@
     <ProjectReference Include="..\Xe.Tools.Wpf\Xe.Tools.Wpf.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Assets\Library.svg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\LibraryDark.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\LibraryLight.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Assets\SmallIcon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

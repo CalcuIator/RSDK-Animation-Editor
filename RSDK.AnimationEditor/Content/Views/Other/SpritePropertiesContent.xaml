@@ -9,8 +9,7 @@
 
     <ScrollViewer>
 
-        <Grid ColumnSpacing="4"
-              Padding="6">
+        <Grid ColumnSpacing="4">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

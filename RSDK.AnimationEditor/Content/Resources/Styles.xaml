@@ -14,7 +14,7 @@
                              Color="#000000"
                              Opacity="0.0241" />
 
-            <SolidColorBrush x:Key="ContentBackground"
+            <SolidColorBrush x:Key="LayerFillColorSolidBrush"
                              Color="#F9F9F9" />
 
             <SolidColorBrush x:Key="CanvasBackground"
@@ -26,14 +26,8 @@
             <SolidColorBrush x:Key="DockBackground"
                              Color="#FCFCFC" />
 
-            <SolidColorBrush x:Key="SegmentedBackground"
-                             Color="#FDFDFD" />
-
             <SolidColorBrush x:Key="DescriptiveValue"
                              Color="#9E000000" />
-
-            <SolidColorBrush x:Key="PlaceholderBackdrop"
-                             Color="#F3F3F3" />
 
             <SolidColorBrush x:Key="MenubarStroke"
                              Color="#000000"
@@ -48,7 +42,7 @@
                              Color="#FFFFFF"
                              Opacity="0.0419" />
 
-            <SolidColorBrush x:Key="ContentBackground"
+            <SolidColorBrush x:Key="LayerFillColorSolidBrush"
                              Color="#272727" />
 
             <SolidColorBrush x:Key="CanvasBackground"
@@ -60,14 +54,8 @@
             <SolidColorBrush x:Key="DockBackground"
                              Color="#2D2D2D" />
 
-            <SolidColorBrush x:Key="SegmentedBackground"
-                             Color="#343434" />
-
             <SolidColorBrush x:Key="DescriptiveValue"
                              Color="#C5FFFFFF" />
-
-            <SolidColorBrush x:Key="PlaceholderBackdrop"
-                             Color="#202020" />
 
             <SolidColorBrush x:Key="MenubarStroke"
                              Color="#000000"

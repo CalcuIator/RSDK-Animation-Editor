@@ -10,8 +10,7 @@
     <ScrollViewer>
 
         <Grid RowSpacing="4"
-              ColumnSpacing="4"
-              Padding="6">
+              ColumnSpacing="4">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />

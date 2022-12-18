@@ -5,8 +5,39 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
-      NavigationCacheMode="Enabled"
-      SizeChanged="_SizeChanged">
+      SizeChanged="_SizeChanged"
+      NavigationCacheMode="Enabled">
+
+    <Page.Resources>
+        <x:Double x:Key="WidePageThresholdWidth">958</x:Double>
+        <x:Double x:Key="MediumPageThresholdWidth">646</x:Double>
+
+        <Storyboard x:Name="ShowAnimation">
+            <DoubleAnimation Storyboard.TargetName="RootContainer"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0"
+                             To="1"
+                             Duration="0:0:0.50" />
+            <DoubleAnimation Storyboard.TargetName="RootTranslateTransform"
+                             Storyboard.TargetProperty="X"
+                             From="-50"
+                             To="0"
+                             Duration="0:0:0.32" />
+        </Storyboard>
+
+        <Storyboard x:Name="HideAnimation">
+            <DoubleAnimation Storyboard.TargetName="RootContainer"
+                             Storyboard.TargetProperty="Opacity"
+                             From="1"
+                             To="0"
+                             Duration="0:0:0.24" />
+            <DoubleAnimation Storyboard.TargetName="RootTranslateTransform"
+                             Storyboard.TargetProperty="X"
+                             From="0"
+                             To="-50"
+                             Duration="0:0:0.32" />
+        </Storyboard>
+    </Page.Resources>
 
     <Grid>
 
@@ -49,6 +80,54 @@
 
         <ScrollViewer Grid.Row="1">
 
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="LayoutGroup">
+                    <VisualState x:Name="SplitState">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="{StaticResource WidePageThresholdWidth}" />
+                        </VisualState.StateTriggers>
+                    </VisualState>
+                    <VisualState x:Name="CombineState">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="0" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="AboutContainer.(Grid.Row)"
+                                    Value="1" />
+                            <Setter Target="AboutContainer.(Grid.Column)"
+                                    Value="0" />
+                            <Setter Target="AboutContainer.Margin"
+                                    Value="0,24,0,0" />
+                            <Setter Target="ContentContainer.ColumnSpacing"
+                                    Value="0" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+
+                <VisualStateGroup x:Name="SizeGroup">
+                    <VisualState x:Name="WideState">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="{StaticResource MediumPageThresholdWidth}" />
+                        </VisualState.StateTriggers>
+                    </VisualState>
+                    <VisualState x:Name="NarrowState">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="0" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="RootContainer.Margin"
+                                    Value="0,16,0,0" />
+                            <Setter Target="ContentContainer.Margin"
+                                    Value="16" />
+                            <Setter Target="SettingHeader.Margin"
+                                    Value="16,0,0,0" />
+                            <Setter Target="SettingHeader.FontSize"
+                                    Value="28" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+
             <!-- 
             Automatic layout is handled in Settings.xaml.cs because
             the xaml visual state groups just won't work??? I'm
@@ -62,11 +141,20 @@
                 <Grid.RenderTransform>
                     <TranslateTransform x:Name="RootTranslateTransform" />
                 </Grid.RenderTransform>
+                
+                <!--
+
+                <Grid.ChildrenTransitions>
+                    <RepositionThemeTransition IsStaggeringEnabled="False" />
+                </Grid.ChildrenTransitions>
+                
+                -->
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
+
                 <TextBlock x:Name="SettingHeader"
                            Margin="52,0,0,0"
                            HorizontalAlignment="Left"
@@ -80,6 +168,14 @@
                       Margin="52,24"
                       ColumnSpacing="56">
 
+                    <!--
+
+                    <Grid.ChildrenTransitions>
+                        <RepositionThemeTransition IsStaggeringEnabled="False" />
+                    </Grid.ChildrenTransitions>
+                    
+                    -->
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -89,11 +185,22 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel Spacing="4">
 
+                    <StackPanel Spacing="4">
+                        
+                        <!--
+
+                        <StackPanel.ChildrenTransitions>
+                            <RepositionThemeTransition IsStaggeringEnabled="False" />
+                        </StackPanel.ChildrenTransitions>
+                        
+                        -->
+
+                        <!--Theme-->
                         <Expander HorizontalAlignment="Stretch"
                                   HorizontalContentAlignment="Left"
-                                  Padding="0">
+                                  Padding="0"
+                                  IsEnabled="False">
                             <Expander.Header>
                                 <Grid Style="{StaticResource SettingsControlContent}">
                                     <Grid.ColumnDefinitions>
@@ -114,7 +221,8 @@
                                         <TextBlock Text="Select which app theme to display"
                                                    TextTrimming="CharacterEllipsis"
                                                    TextWrapping="NoWrap"
-                                                   Style="{StaticResource DescriptiveStyle}" />
+                                                   Style="{StaticResource DescriptiveStyle}"
+                                                   Opacity="0.4" />
                                     </StackPanel>
                                 </Grid>
                             </Expander.Header>
@@ -122,13 +230,23 @@
                                 <StackPanel Orientation="Vertical"
                                             Spacing="4"
                                             Padding="48,8,24,8">
-                                    <RadioButton Content="Light" />
-                                    <RadioButton Content="Dark" />
-                                    <RadioButton Content="Use system setting" />
+                                    <RadioButton Checked="Theme_Checked"
+                                                 Content="Light"
+                                                 GroupName="Theme"
+                                                 Tag="1" />
+                                    <RadioButton Checked="Theme_Checked"
+                                                 Content="Dark"
+                                                 GroupName="Theme"
+                                                 Tag="2" />
+                                    <RadioButton Checked="Theme_Checked"
+                                                 Content="Use system setting"
+                                                 GroupName="Theme"
+                                                 Tag="3" />
                                 </StackPanel>
                             </Expander.Content>
                         </Expander>
 
+                        <!--AutoPlay-->
                         <Grid Style="{StaticResource SettingsControl}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -176,6 +294,7 @@
                             <ToggleSwitch Grid.Column="2" />
                         </Grid>
 
+                        <!--Compact-->
                         <Grid Style="{StaticResource SettingsControl}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -197,6 +316,7 @@
                             <ToggleSwitch Grid.Column="2" />
                         </Grid>
 
+                        <!--Scrollbars-->
                         <Grid Style="{StaticResource SettingsControl}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -218,6 +338,7 @@
                             <ToggleSwitch Grid.Column="2" />
                         </Grid>
 
+                        <!--Context menu-->
                         <Grid Style="{StaticResource SettingsControl}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -261,7 +382,7 @@
                                     Margin="-12,8,0,8"
                                     Spacing="2">
                             <HyperlinkButton Content="Github repo"
-                                             NavigateUri="https://github.com/CalcuIator/RSDK-Animation-Editor-WinUI" />
+                                             NavigateUri="https://github.com/CalcuIator/RSDK-Animation-Editor" />
                             <HyperlinkButton Content="Xeeynamo's GitHub"
                                              NavigateUri="https://github.com/xeeynamo" />
                             <HyperlinkButton Content="SuperSonic16's GitHub"

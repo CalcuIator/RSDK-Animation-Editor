@@ -5,6 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Foundation;
 
 namespace RSDK.AnimationEditor.Content.ViewModels
@@ -481,6 +482,38 @@ namespace RSDK.AnimationEditor.Content.ViewModels
             InvalidateFrameProperties();
         }
 
+        public async Task<bool> FileOpen(string fileName)
+        {
+            //Catch is handled in the MainWindow
+            if (File.Exists(fileName))
+            {
+                var ext = Path.GetExtension(fileName);
+                using (var fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
+                {
+                    using (var reader = new BinaryReader(fStream))
+                    {
+                        FileName = fileName;
+                        switch (ext)
+                        {
+                            case ".ani":
+                                PathMod = "..\\sprites";
+                                AnimationData = await Task.Run(() => new RSDK3.Animation(reader));
+                                break;
+                            case ".bin":
+                                PathMod = "..";
+                                AnimationData = await Task.Run(() => new RSDK5.Animation(reader));
+                                return false;
+                            default:
+                                return false;
+                        }
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
+        /*
         public bool FileOpen(string fileName)
         {
             //Catch is handled in the MainWindow
@@ -511,7 +544,7 @@ namespace RSDK.AnimationEditor.Content.ViewModels
             }
             return false;
         }
-
+        */
 
         public void FileSave(string fileName = null)
         {
