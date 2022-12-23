@@ -69,7 +69,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <TextBlock Foreground="{ThemeResource DescriptiveValue}"
+                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                    Grid.Row="0"
                                    Padding="8,4"
                                    TextWrapping="Wrap">
@@ -163,11 +163,10 @@
                         BorderBrush="{ThemeResource CardStrokeColorDefault}"
                         BorderThickness="1,1,0,0"
                         CornerRadius="8,0,0,0"
-                        Grid.Row="1"
                         Grid.Column="1"
                         Padding="12">
                     <Image Source="{x:Bind ViewModel.CurrentTexture.Image, Mode=TwoWay}"
-                           Translation="0,0,16">
+                           Translation="0,0,8">
                         <Image.Shadow>
                             <ThemeShadow />
                         </Image.Shadow>

@@ -32,20 +32,22 @@ namespace RSDK.AnimationEditor
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            MainWindow window = new();
+            MainWindow window = new MainWindow();
             window.Activate();
 
-            Frame rootFrame = window.Content as Frame;
+            if (!window.Content.GetType().Equals(typeof(Frame)))
+            {
+                window.Content = new Frame();
+            }
 
-            if (rootFrame == null)
+            System.Threading.Tasks.Parallel.Invoke(() =>
             {
-                rootFrame = new Frame();
-                window.Content = rootFrame;
-            }
-            if (rootFrame.Content == null)
-            {
-                rootFrame.Navigate(typeof(MainPage));
-            }
+                Frame rootFrame = window.Content as Frame;
+                if (rootFrame.Content == null)
+                {
+                    rootFrame.Navigate(typeof(MainPage));
+                }
+            });
         }
     }
 }

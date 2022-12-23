@@ -7,9 +7,10 @@
       mc:Ignorable="d"
       NavigationCacheMode="Enabled">
 
-    <ScrollViewer>
+    <ScrollViewer CacheMode="BitmapCache">
 
-        <Grid ColumnSpacing="4">
+        <Grid CacheMode="BitmapCache"
+              ColumnSpacing="4">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -34,7 +35,8 @@
                        Minimum="-32768"
                        Maximum="32767"
                        SpinButtonPlacementMode="Inline"
-                       Value="{Binding SelectedFrameLeft, Mode=TwoWay}" />
+                       Value="{Binding SelectedFrameLeft, Mode=TwoWay}"
+                       CacheMode="BitmapCache" />
 
             <NumberBox Header="Y"
                        Grid.Row="0"
@@ -42,7 +44,8 @@
                        Minimum="-32768"
                        Maximum="32767"
                        SpinButtonPlacementMode="Inline"
-                       Value="{Binding SelectedFrameTop, Mode=TwoWay}" />
+                       Value="{Binding SelectedFrameTop, Mode=TwoWay}"
+                       CacheMode="BitmapCache" />
 
             <NumberBox Header="Width"
                        Grid.Row="1"
@@ -50,7 +53,8 @@
                        Minimum="0"
                        Maximum="32767"
                        SpinButtonPlacementMode="Inline"
-                       Value="{Binding SelectedFrameWidth, Mode=TwoWay}" />
+                       Value="{Binding SelectedFrameWidth, Mode=TwoWay}"
+                       CacheMode="BitmapCache" />
 
             <NumberBox Header="Height"
                        Grid.Row="1"
@@ -58,7 +62,8 @@
                        Minimum="0"
                        Maximum="32767"
                        SpinButtonPlacementMode="Inline"
-                       Value="{Binding SelectedFrameHeight, Mode=TwoWay}" />
+                       Value="{Binding SelectedFrameHeight, Mode=TwoWay}"
+                       CacheMode="BitmapCache" />
 
             <NumberBox Header="Pivot X"
                        Grid.Row="2"
@@ -66,7 +71,8 @@
                        Minimum="-32768"
                        Maximum="32767"
                        SpinButtonPlacementMode="Inline"
-                       Value="{Binding SelectedFramePivotX, Mode=TwoWay}" />
+                       Value="{Binding SelectedFramePivotX, Mode=TwoWay}"
+                       CacheMode="BitmapCache" />
 
             <NumberBox Header="Pivot Y"
                        Grid.Row="2"
@@ -74,7 +80,8 @@
                        Minimum="-32768"
                        Maximum="32767"
                        SpinButtonPlacementMode="Inline"
-                       Value="{Binding SelectedFramePivotY, Mode=TwoWay}" />
+                       Value="{Binding SelectedFramePivotY, Mode=TwoWay}"
+                       CacheMode="BitmapCache" />
 
             <NumberBox Header="ID"
                        Grid.Row="3"
@@ -82,7 +89,8 @@
                        Minimum="0"
                        Maximum="65535"
                        SpinButtonPlacementMode="Inline"
-                       Value="{Binding SelectedFrameId, Mode=TwoWay}" />
+                       Value="{Binding SelectedFrameId, Mode=TwoWay}"
+                       CacheMode="BitmapCache" />
 
             <NumberBox Header="Duration"
                        Grid.Row="3"
@@ -90,9 +98,11 @@
                        Minimum="0"
                        Maximum="65535"
                        SpinButtonPlacementMode="Inline"
-                       Value="{Binding SelectedFrameDuration, Mode=TwoWay}" />
+                       Value="{Binding SelectedFrameDuration, Mode=TwoWay}"
+                       CacheMode="BitmapCache" />
 
         </Grid>
+
 
     </ScrollViewer>
 

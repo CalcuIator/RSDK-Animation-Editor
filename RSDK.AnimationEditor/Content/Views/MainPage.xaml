@@ -35,7 +35,7 @@
                        Width="16"
                        Height="16" />
                 <TextBlock x:Name="AppTitleTextBlock"
-                           Text="{Binding TitleString}"
+                           Text="{x:Bind ViewModel.TitleString,Mode=OneWay}"
                            Style="{StaticResource CaptionTextBlockStyle}"
                            Grid.Column="3" />
             </Grid>
@@ -64,7 +64,8 @@
                                                      Key="O" />
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutSubItem Text="Recent" IsEnabled="False">
+                        <MenuFlyoutSubItem Text="Recent"
+                                           IsEnabled="False">
                             <MenuFlyoutSubItem.Icon>
                                 <FontIcon Glyph="&#xe823;" />
                             </MenuFlyoutSubItem.Icon>
@@ -77,7 +78,7 @@
                         </MenuFlyoutSubItem>
                         <MenuFlyoutSeparator />
                         <MenuFlyoutItem Text="Save"
-                                        IsEnabled="{Binding IsAnimationDataLoaded}"
+                                        IsEnabled="{x:Bind ViewModel.IsAnimationDataLoaded,Mode=OneWay}"
                                         Click="FileSave_Click">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xe74e;" />
@@ -88,7 +89,7 @@
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <MenuFlyoutItem Text="Save as"
-                                        IsEnabled="{Binding IsAnimationDataLoaded}">
+                                        IsEnabled="False">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xe792;" />
                             </MenuFlyoutItem.Icon>
@@ -107,7 +108,7 @@
                     </MenuBarItem>
                     <MenuBarItem Title="View">
                         <MenuFlyoutItem Text="Hitbox manager"
-                                        IsEnabled="{Binding IsAnimationDataLoaded}"
+                                        IsEnabled="{x:Bind ViewModel.IsAnimationDataLoaded, Mode=OneWay}"
                                         Click="ViewHitbox_Click">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xe9a6;" />
@@ -118,7 +119,7 @@
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <MenuFlyoutItem Text="Texture manager"
-                                        IsEnabled="{Binding IsAnimationDataLoaded}"
+                                        IsEnabled="{x:Bind ViewModel.IsAnimationDataLoaded, Mode=OneWay}"
                                         Click="ViewTexture_Click">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xe8b9;" />
@@ -132,7 +133,7 @@
                 </MenuBar>
                 <AppBarSeparator />
                 <Button Style="{StaticResource MenuButton}"
-                        IsEnabled="{Binding IsAnimationDataLoaded}"
+                        IsEnabled="{x:Bind ViewModel.IsAnimationDataLoaded, Mode=OneWay}"
                         ToolTipService.ToolTip="Save"
                         Click="FileSave_Click"
                         Content="&#xe74e;">
@@ -166,7 +167,7 @@
         <Grid Grid.Row="2"
               ColumnSpacing="8"
               Padding="8"
-              Background="{ThemeResource LayerFillColorSolidBrush}"
+              Background="{ThemeResource SolidBackgroundFillColorTertiaryBrush}"
               x:Name="Content">
 
             <Grid.BackgroundTransition>
@@ -192,11 +193,12 @@
                 </Grid.RowDefinitions>
                 <ListView Grid.Row="0"
                           RightTapped="AnimList_RightTapped"
-                          ItemsSource="{Binding Animations}"
+                          ItemsSource="{x:Bind ViewModel.Animations,Mode=OneWay}"
                           DisplayMemberPath="Name"
                           Margin="-4,0"
-                          SelectedItem="{Binding SelectedAnimation, Mode=TwoWay}"
-                          SelectedIndex="{Binding SelectedAnimationIndex, Mode=TwoWay}">
+
+                          SelectedItem="{x:Bind ViewModel.SelectedAnimation, Mode=TwoWay}"
+                          SelectedIndex="{x:Bind ViewModel.SelectedAnimationIndex, Mode=TwoWay}">
                     <ListView.Resources>
                         <CommandBarFlyout x:Name="AnimationListContextMenu"
                                           AlwaysExpanded="True">
@@ -303,7 +305,7 @@
 
                     <Grid>
 
-                        <TextBlock Foreground="{ThemeResource DescriptiveValue}"
+                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                    Margin="8,4"
                                    HorizontalAlignment="Right"
                                    VerticalAlignment="Top"
@@ -473,7 +475,7 @@
 
 
                 <Grid Grid.Row="0">
-                    
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
@@ -494,7 +496,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        
+
                         <Button Canvas.ZIndex="3"
                                 Click="SegmentedColumn0_Clicked"
                                 Grid.Column="0"
@@ -537,7 +539,8 @@
                     <!---->
                     <Frame Grid.Row="1"
                            Loaded="Column2Frame_Loaded"
-                           x:Name="Column2Frame" />
+                           x:Name="Column2Frame">
+                    </Frame>
                 </Grid>
 
                 <Grid ColumnSpacing="4"

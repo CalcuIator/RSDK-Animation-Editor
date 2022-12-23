@@ -86,6 +86,7 @@ namespace RSDK.AnimationEditor.Content.Views
 
         private void Theme_Checked(object sender, RoutedEventArgs e)
         {
+            /*
             if (sender is RadioButton radio)
             {
                 string tag = radio.Tag as string;
@@ -101,6 +102,7 @@ namespace RSDK.AnimationEditor.Content.Views
                         break;
                 }
             }
+            */
         }
     }
 }

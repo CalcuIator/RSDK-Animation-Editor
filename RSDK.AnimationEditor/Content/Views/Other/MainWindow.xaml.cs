@@ -14,36 +14,19 @@ namespace RSDK.AnimationEditor.Content.Views.Other
         public MainWindow()
         {
             InitializeComponent();
-            TrySetMicaBackdrop();
             XamlWindow = this;
 
             var manager = WinUIEx.WindowManager.Get(this);
             manager.PersistenceId = "MWPersistance";
             manager.MinWidth = 500;
             manager.MinHeight = 350;
-
+            TrySetMicaBackdrop();
             ExtendsContentIntoTitleBar = true;
+
         }
 
+        #region
 
-        /*
-        private void UpdateCaptionColors()
-        {
-            var isThemeDark = Application.Current.RequestedTheme == ApplicationTheme.Dark;
-
-            appWindow.TitleBar.ButtonHoverBackgroundColor = isThemeDark ? Color.FromArgb(15, 255, 255, 255) : Color.FromArgb(10, 0, 0, 0);
-            appWindow.TitleBar.ButtonPressedBackgroundColor = isThemeDark ? Color.FromArgb(10, 255, 255, 255) : Color.FromArgb(6, 0, 0, 0);
-        }
-        */
-
-        private void Window_ThemeChanged(FrameworkElement sender, object args)
-        {
-            if (m_configurationSource != null)
-            {
-                SetConfigurationSourceTheme();
-            }
-            //UpdateCaptionColors();
-        }
         public bool TrySetMicaBackdrop()
         {
             if (Microsoft.UI.Composition.SystemBackdrops.MicaController.IsSupported())
@@ -91,6 +74,13 @@ namespace RSDK.AnimationEditor.Content.Views.Other
             m_configurationSource = null;
         }
 
+        private void Window_ThemeChanged(FrameworkElement sender, object args)
+        {
+            if (m_configurationSource != null)
+            {
+                SetConfigurationSourceTheme();
+            }
+        }
         private void SetConfigurationSourceTheme()
         {
             switch (((FrameworkElement)Content).ActualTheme)
@@ -100,6 +90,9 @@ namespace RSDK.AnimationEditor.Content.Views.Other
                 case ElementTheme.Default: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Default; break;
             }
         }
+
+        #endregion
+
 
     }
 }
