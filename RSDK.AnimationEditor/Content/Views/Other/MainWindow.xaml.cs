@@ -1,6 +1,8 @@
-﻿using Microsoft.UI.Composition.SystemBackdrops;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Windowing;
+using Microsoft.UI;
+using System.Threading.Tasks;
 using WinRT;
+using WinRT.Interop;
 
 namespace RSDK.AnimationEditor.Content.Views.Other
 {
@@ -8,8 +10,8 @@ namespace RSDK.AnimationEditor.Content.Views.Other
     {
         public static MainWindow XamlWindow { get; set; }
         WindowsSystemDispatcherQueueHelper m_wsdqHelper;
-        MicaController m_micaController;
-        SystemBackdropConfiguration m_configurationSource;
+        Microsoft.UI.Composition.SystemBackdrops.MicaController m_micaController;
+        Microsoft.UI.Composition.SystemBackdrops.SystemBackdropConfiguration m_configurationSource;
 
         public MainWindow()
         {
@@ -17,51 +19,55 @@ namespace RSDK.AnimationEditor.Content.Views.Other
             XamlWindow = this;
 
             var manager = WinUIEx.WindowManager.Get(this);
+            AppWindow appWindow = GetAppWindowForCurrentWindow();
+
             manager.PersistenceId = "MWPersistance";
             manager.MinWidth = 500;
             manager.MinHeight = 350;
-            TrySetMicaBackdrop();
-            ExtendsContentIntoTitleBar = true;
 
+            appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+            appWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+            appWindow.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+
+            TrySetMicaBackdrop();
         }
 
         #region
 
+        private AppWindow GetAppWindowForCurrentWindow()
+        {
+            return AppWindow.GetFromWindowId(Win32Interop.GetWindowIdFromWindow(WindowNative.GetWindowHandle(this)));
+        }
+        
         public bool TrySetMicaBackdrop()
         {
-            if (Microsoft.UI.Composition.SystemBackdrops.MicaController.IsSupported())
-            {
-                m_wsdqHelper = new WindowsSystemDispatcherQueueHelper();
-                m_wsdqHelper.EnsureWindowsSystemDispatcherQueueController();
+            if (!Microsoft.UI.Composition.SystemBackdrops.MicaController.IsSupported()) return false;
 
-                // Hooking up the policy object
-                m_configurationSource = new Microsoft.UI.Composition.SystemBackdrops.SystemBackdropConfiguration();
-                Activated += Window_Activated;
-                Closed += Window_Closed;
-                ((FrameworkElement)Content).ActualThemeChanged += Window_ThemeChanged;
+            m_wsdqHelper = new WindowsSystemDispatcherQueueHelper();
+            m_wsdqHelper.EnsureWindowsSystemDispatcherQueueController();
 
-                // Initial configuration state.
-                m_configurationSource.IsInputActive = true;
-                SetConfigurationSourceTheme();
+            m_configurationSource = new Microsoft.UI.Composition.SystemBackdrops.SystemBackdropConfiguration();
+            m_configurationSource.IsInputActive = true;
+            SetConfigurationSourceTheme();
 
-                m_micaController = new Microsoft.UI.Composition.SystemBackdrops.MicaController();
+            m_micaController = new Microsoft.UI.Composition.SystemBackdrops.MicaController();
+            m_micaController.AddSystemBackdropTarget(this.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
+            m_micaController.SetSystemBackdropConfiguration(m_configurationSource);
 
-                // Enable the system backdrop.
-                // Note: Be sure to have "using WinRT;" to support the Window.As<...>() call.
-                m_micaController.AddSystemBackdropTarget(this.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
-                m_micaController.SetSystemBackdropConfiguration(m_configurationSource);
-                return true; // succeeded
-            }
+            Activated += Window_Activated;
+            Closed += Window_Closed;
+            ((Microsoft.UI.Xaml.FrameworkElement)Content).ActualThemeChanged += Window_ThemeChanged;
 
-            return false; // Mica is not supported on this system
+            return true;
         }
 
-        private void Window_Activated(object sender, WindowActivatedEventArgs args)
+
+        private void Window_Activated(object sender, Microsoft.UI.Xaml.WindowActivatedEventArgs args)
         {
-            m_configurationSource.IsInputActive = args.WindowActivationState != WindowActivationState.Deactivated;
+            m_configurationSource.IsInputActive = args.WindowActivationState != Microsoft.UI.Xaml.WindowActivationState.Deactivated;
         }
 
-        private void Window_Closed(object sender, WindowEventArgs args)
+        private void Window_Closed(object sender, Microsoft.UI.Xaml.WindowEventArgs args)
         {
             // Make sure any Mica/Acrylic controller is disposed so it doesn't try to
             // use this closed window.
@@ -74,7 +80,7 @@ namespace RSDK.AnimationEditor.Content.Views.Other
             m_configurationSource = null;
         }
 
-        private void Window_ThemeChanged(FrameworkElement sender, object args)
+        private void Window_ThemeChanged(Microsoft.UI.Xaml.FrameworkElement sender, object args)
         {
             if (m_configurationSource != null)
             {
@@ -83,11 +89,11 @@ namespace RSDK.AnimationEditor.Content.Views.Other
         }
         private void SetConfigurationSourceTheme()
         {
-            switch (((FrameworkElement)Content).ActualTheme)
+            switch (((Microsoft.UI.Xaml.FrameworkElement)Content).ActualTheme)
             {
-                case ElementTheme.Dark: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Dark; break;
-                case ElementTheme.Light: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Light; break;
-                case ElementTheme.Default: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Default; break;
+                case Microsoft.UI.Xaml.ElementTheme.Dark: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Dark; break;
+                case Microsoft.UI.Xaml.ElementTheme.Light: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Light; break;
+                case Microsoft.UI.Xaml.ElementTheme.Default: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Default; break;
             }
         }
 

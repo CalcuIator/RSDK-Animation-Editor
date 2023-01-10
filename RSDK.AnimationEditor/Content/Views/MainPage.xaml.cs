@@ -6,7 +6,6 @@ using RSDK.AnimationEditor.Content.ViewModels;
 using RSDK.AnimationEditor.Content.Views.Other;
 using System;
 using System.IO;
-using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
 
@@ -23,16 +22,14 @@ namespace RSDK.AnimationEditor.Content.Views
 
         private MainViewModel ViewModel => (MainViewModel)DataContext;
         public static Grid MDragRegion { get; set; }
-        bool hasLoaded = false;
         public MainPage()
         {
             InitializeComponent();
             DataContext = new MainViewModel();
-            MainWindow.XamlWindow.SetTitleBar(AppTitleBar);
+            //MainWindow.XamlWindow.SetTitleBar(AppTitleBar);
             MDragRegion = AppTitleBar;
             MainWindow.XamlWindow.Activated += _Activated;
         }
-
         private void _Activated(object sender, WindowActivatedEventArgs args)
         {
             if (args.WindowActivationState == WindowActivationState.Deactivated)
@@ -55,6 +52,7 @@ namespace RSDK.AnimationEditor.Content.Views
             Picker.FileTypeFilter.Add(".ani");
             Picker.FileTypeFilter.Add(".bin");
             IntPtr hwnd = WindowNative.GetWindowHandle(MainWindow.XamlWindow);
+
             InitializeWithWindow.Initialize(Picker, hwnd);
 
             Windows.Storage.StorageFile File = await Picker.PickSingleFileAsync();
@@ -65,16 +63,10 @@ namespace RSDK.AnimationEditor.Content.Views
                 {
                     await ViewModel.FileOpen(File.Path);
                     MainWindow.XamlWindow.Title = AppTitleTextBlock.Text;
-
-                    if (!hasLoaded)
+                    string[] columnNames = { "Column0", "Column1", "Column2" };
+                    foreach (string name in columnNames)
                     {
-                        Parallel.Invoke(() =>
-                        {
-                            FindName("Column0");
-                            FindName("Column1");
-                            FindName("Column2");
-                            hasLoaded = true;
-                        });
+                        FindName(name);
                     }
                 }
                 catch (Exception ex)
@@ -97,76 +89,13 @@ namespace RSDK.AnimationEditor.Content.Views
         }
 
         /*
-
-        private async void FileOpen_Click(object sender, RoutedEventArgs e)
-        {
-
-            //var fd = Xe.Tools.Wpf.Dialogs.FileDialog.Factory(this,
-            //    Xe.Tools.Wpf.Dialogs.FileDialog.Behavior.Open,
-            //    Xe.Tools.Wpf.Dialogs.FileDialog.Type.Any, false);
-            //if (fd.ShowDialog() == true)
-            //{
-            //    ViewModel.FileOpen(fd.FileName);
-            //}
-            var Picker = new FileOpenPicker();
-            Picker.FileTypeFilter.Add(".ani");
-            Picker.FileTypeFilter.Add(".bin");
-
-            IntPtr hwnd = WindowNative.GetWindowHandle(MainWindow.XamlWindow);
-            InitializeWithWindow.Initialize(Picker, hwnd);
-
-            Windows.Storage.StorageFile File = await Picker.PickSingleFileAsync();
-
-            if (File != null)
-            {
-                try
-                {
-                    //Load file
-                    ViewModel.FileOpen(File.Path);
-
-                    /*Title has to be updated from C# since
-                    Window doesn't have a DataContext property*/
-        /*
-
-                    MainWindow.XamlWindow.Title = AppTitleTextBlock.Text;
-
-                    if (hasLoaded == false)
-                    {
-                        //DispatcherQueue.TryEnqueue(async () =>
-                        //{
-                        //    await Task.Delay(16);
-                        FindName("Column0");
-                        //    await Task.Delay(16);
-                        FindName("Column1");
-                        //    await Task.Delay(16);
-                        FindName("Column2");
-                        //});
-                        hasLoaded = true;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ContentDialog Dialog = new();
-
-                    Dialog.XamlRoot = XamlRoot;
-                    Dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-                    Dialog.Title = "Something went wrong";
-                    Dialog.Content = "There was a problem loading this file. " + ex.Message;
-                    Dialog.PrimaryButtonText = "Close";
-                    var result = await Dialog.ShowAsync();
-                    if (result == ContentDialogResult.Primary)
-                    {
-                        OpenFromDialog();
-                        //UnloadObject(Dialog);
-                    }
-                };
-            }
-            else
-            {
-                //No file selected, do nothing
-            }
-        }
-
+        var fd = Xe.Tools.Wpf.Dialogs.FileDialog.Factory(this,
+             Xe.Tools.Wpf.Dialogs.FileDialog.Behavior.Open,
+             Xe.Tools.Wpf.Dialogs.FileDialog.Type.Any, false);
+         if (fd.ShowDialog() == true)
+         {
+             ViewModel.FileOpen(fd.FileName);
+         }
         */
 
         private void FileSave_Click(object sender, RoutedEventArgs e)
@@ -220,7 +149,7 @@ namespace RSDK.AnimationEditor.Content.Views
             {
                 Frame.Navigate(typeof(Settings));
             }
-            MainWindow.XamlWindow.DispatcherQueue.TryEnqueue(() => MainWindow.XamlWindow.SetTitleBar(Settings.SDragRegion));
+            MainWindow.XamlWindow.SetTitleBar(Settings.SDragRegion);
         }
 
         #endregion
@@ -235,18 +164,16 @@ namespace RSDK.AnimationEditor.Content.Views
             }
         }
 
-        private async void SegmentedColumn0_Clicked(object sender, RoutedEventArgs e)
+        private void SegmentedColumn0_Clicked(object sender, RoutedEventArgs e)
         {
             Column2Frame.Navigate(typeof(SpritePropertiesContent));
-            await Task.Delay(10);
-            DispatcherQueue.TryEnqueue(() => Grid.SetColumn(SegmentedSelection, 0));
+            Grid.SetColumn(SegmentedSelection, 0);
         }
 
-        private async void SegmentedColumn1_Clicked(object sender, RoutedEventArgs e)
+        private void SegmentedColumn1_Clicked(object sender, RoutedEventArgs e)
         {
             Column2Frame.Navigate(typeof(HitboxContent));
-            await Task.Delay(10);
-            DispatcherQueue.TryEnqueue(() => Grid.SetColumn(SegmentedSelection, 1));
+            Grid.SetColumn(SegmentedSelection, 1);
         }
 
         #endregion
@@ -333,7 +260,7 @@ namespace RSDK.AnimationEditor.Content.Views
                 Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft
             };
 
-            AnimationListContextMenu.ShowAt((FrameworkElement)sender, options);
+            //AnimationListContextMenu.ShowAt((FrameworkElement)sender, options);
         }
 
         private async void Rename_Click(object sender, RoutedEventArgs e)

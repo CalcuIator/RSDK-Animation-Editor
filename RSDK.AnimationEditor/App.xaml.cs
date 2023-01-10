@@ -35,19 +35,9 @@ namespace RSDK.AnimationEditor
             MainWindow window = new MainWindow();
             window.Activate();
 
-            if (!window.Content.GetType().Equals(typeof(Frame)))
-            {
-                window.Content = new Frame();
-            }
-
-            System.Threading.Tasks.Parallel.Invoke(() =>
-            {
-                Frame rootFrame = window.Content as Frame;
-                if (rootFrame.Content == null)
-                {
-                    rootFrame.Navigate(typeof(MainPage));
-                }
-            });
+            Frame rootFrame = new Frame();
+            rootFrame.Navigate(typeof(MainPage));
+            window.Content = rootFrame;
         }
     }
 }

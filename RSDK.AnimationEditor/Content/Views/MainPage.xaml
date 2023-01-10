@@ -25,9 +25,9 @@
             -->
             <Grid VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="14" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="14" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Image Source="/Assets/SmallIcon.ico"
@@ -192,52 +192,13 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <ListView Grid.Row="0"
-                          RightTapped="AnimList_RightTapped"
                           ItemsSource="{x:Bind ViewModel.Animations,Mode=OneWay}"
                           DisplayMemberPath="Name"
                           Margin="-4,0"
-
+                          ScrollViewer.IsDeferredScrollingEnabled="True"
                           SelectedItem="{x:Bind ViewModel.SelectedAnimation, Mode=TwoWay}"
-                          SelectedIndex="{x:Bind ViewModel.SelectedAnimationIndex, Mode=TwoWay}">
-                    <ListView.Resources>
-                        <CommandBarFlyout x:Name="AnimationListContextMenu"
-                                          AlwaysExpanded="True">
-                            <CommandBarFlyout.PrimaryCommands>
-                                <AppBarButton>
-                                    <AppBarButton.Icon>
-                                        <FontIcon Glyph="&#xe010;" />
-                                    </AppBarButton.Icon>
-                                </AppBarButton>
-                                <AppBarButton>
-                                    <AppBarButton.Icon>
-                                        <FontIcon Glyph="&#xe011;" />
-                                    </AppBarButton.Icon>
-                                </AppBarButton>
-                                <AppBarButton Click="Rename_Click">
-                                    <AppBarButton.Icon>
-                                        <FontIcon Glyph="&#xe8ac;" />
-                                    </AppBarButton.Icon>
-                                </AppBarButton>
-                                <AppBarButton>
-                                    <AppBarButton.Icon>
-                                        <FontIcon Glyph="&#xe74d;" />
-                                    </AppBarButton.Icon>
-                                </AppBarButton>
-                            </CommandBarFlyout.PrimaryCommands>
-                            <CommandBarFlyout.SecondaryCommands>
-                                <AppBarButton Label="Duplicate">
-                                    <AppBarButton.Icon>
-                                        <FontIcon Glyph="&#xe8c8;" />
-                                    </AppBarButton.Icon>
-                                </AppBarButton>
-                                <AppBarButton Label="Export">
-                                    <AppBarButton.Icon>
-                                        <FontIcon Glyph="&#xede1;" />
-                                    </AppBarButton.Icon>
-                                </AppBarButton>
-                            </CommandBarFlyout.SecondaryCommands>
-                        </CommandBarFlyout>
-                    </ListView.Resources>
+                          SelectedIndex="{x:Bind ViewModel.SelectedAnimationIndex, Mode=TwoWay}"
+                          VirtualizingStackPanel.VirtualizationMode="Recycling">
                 </ListView>
 
                 <Toolkit:WrapPanel Orientation="Horizontal"

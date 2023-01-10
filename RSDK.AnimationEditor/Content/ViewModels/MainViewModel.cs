@@ -482,25 +482,26 @@ namespace RSDK.AnimationEditor.Content.ViewModels
             InvalidateFrameProperties();
         }
 
+
         public async Task<bool> FileOpen(string fileName)
         {
             //Catch is handled in the MainWindow
             if (File.Exists(fileName))
             {
+                FileName = fileName;
+                byte[] bytes = await File.ReadAllBytesAsync(fileName);
                 var ext = Path.GetExtension(fileName);
-                using (var fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
+                PathMod = ext == ".ani" ? "..\\sprites" : "..";
+                using (var memStream = new MemoryStream(bytes))
                 {
-                    using (var reader = new BinaryReader(fStream))
+                    using (var reader = new BinaryReader(memStream))
                     {
-                        FileName = fileName;
                         switch (ext)
                         {
                             case ".ani":
-                                PathMod = "..\\sprites";
                                 AnimationData = await Task.Run(() => new RSDK3.Animation(reader));
                                 break;
                             case ".bin":
-                                PathMod = "..";
                                 AnimationData = await Task.Run(() => new RSDK5.Animation(reader));
                                 return false;
                             default:
@@ -513,38 +514,6 @@ namespace RSDK.AnimationEditor.Content.ViewModels
             return false;
         }
 
-        /*
-        public bool FileOpen(string fileName)
-        {
-            //Catch is handled in the MainWindow
-            if (File.Exists(fileName))
-            {
-                var ext = Path.GetExtension(fileName);
-                using (var fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
-                {
-                    using (var reader = new BinaryReader(fStream))
-                    {
-                        FileName = fileName;
-                        switch (ext)
-                        {
-                            case ".ani":
-                                PathMod = "..\\sprites";
-                                AnimationData = new RSDK3.Animation(reader);
-                                break;
-                            case ".bin":
-                                PathMod = "..";
-                                AnimationData = new RSDK5.Animation(reader);
-                                return false;
-                            default:
-                                return false;
-                        }
-                    }
-                }
-                return true;
-            }
-            return false;
-        }
-        */
 
         public void FileSave(string fileName = null)
         {
